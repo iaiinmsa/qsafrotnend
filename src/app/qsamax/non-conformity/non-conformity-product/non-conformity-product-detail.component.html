@@ -1,0 +1,140 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Detalle de No Conformidad: {{ productDetail?.productionOrderId || 'Cargando...' }}</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative"><i class="ri-home-8-line"></i> Dashboard</a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/QSA/non-conformity-product">No Conformidades Productos</a>
+        </li>
+        <li class="breadcrumb-item position-relative">Detalle</li>
+    </ol>
+</div>
+
+<div *ngIf="isLoading" class="alert alert-info">Cargando detalles...</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+<mat-card *ngIf="productDetail && !isLoading" class="daxa-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-header>
+        <mat-card-title>ID Orden Producción: {{ productDetail.productionOrderId }}</mat-card-title>
+        <mat-card-subtitle>ID Proyecto: {{ productDetail.idproject }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list role="list">
+            <h3 matSubheader>Información General</h3>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>ID Producto:</span>
+                <span matListItemLine>{{ productDetail.idProduct }} {{productDetail.productName ? '(' + productDetail.productName + ')' : ''}}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Fecha Fabricación:</span>
+                <span matListItemLine>{{ productDetail.manufacturingDate | date:'mediumDate' }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Creado Por:</span>
+                <span matListItemLine>{{ productDetail.createdBy }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Fecha Creación:</span>
+                <span matListItemLine>{{ productDetail.creationDate | date:'medium' }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>ID Departamento:</span>
+                <span matListItemLine>{{ productDetail.departmentId }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Destinatario Previsto:</span>
+                <span matListItemLine>{{ productDetail.intendedRecipient }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Cantidad Rechazada:</span>
+                <span matListItemLine>{{ productDetail.rejectedQuantity }}</span>
+            </mat-list-item>
+
+            <h3 matSubheader>Causa y Disposición</h3>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Comentario Planificación:</span>
+                <span matListItemLine>{{ productDetail.planningComment }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>ID Causa No Conformidad:</span>
+                <span matListItemLine>{{ productDetail.idCauseNonConformity }} {{productDetail.causeNonConformityName ? '(' + productDetail.causeNonConformityName + ')' : ''}}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>ID Disposición:</span>
+                <span matListItemLine>{{ productDetail.iddisposition }} {{productDetail.dispositionName ? '(' + productDetail.dispositionName + ')' : ''}}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Comentario Disposición (DO):</span>
+                <span matListItemLine>{{ productDetail.doComment }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Costo Disposición:</span>
+                <span matListItemLine>{{ productDetail.dispositionCost | currency:'COP':'symbol':'3.0-0' }}</span> <!-- Ajusta el formato de moneda -->
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Fecha Estimada Cierre:</span>
+                <span matListItemLine>{{ productDetail.estimatedClosingDate | date:'mediumDate' }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Observación Disposición (DO):</span>
+                <span matListItemLine>{{ productDetail.doObservation }}</span>
+            </mat-list-item>
+
+            <h3 matSubheader>Aprobaciones</h3>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Proyecto Aprobado:</span>
+                <span matListItemLine>{{ productDetail.approvedProject ? 'Sí' : 'No' }} <em *ngIf="productDetail.approvedProjectUser">({{productDetail.approvedProjectUser}})</em></span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Gestión Financiera Aprobada:</span>
+                <span matListItemLine>{{ productDetail.approvedFinancialManagement ? 'Sí' : 'No' }} <em *ngIf="productDetail.approvedFinancialManagementUser">({{productDetail.approvedFinancialManagementUser}})</em></span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Gestión General Aprobada:</span>
+                <span matListItemLine>{{ productDetail.approvedGeneralManagement ? 'Sí' : 'No' }} <em *ngIf="productDetail.approvedGeneralManagementUser">({{productDetail.approvedGeneralManagementUser}})</em></span>
+            </mat-list-item>
+
+            <h3 matSubheader>Cierre y Verificación</h3>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Fecha Real de Cierre:</span>
+                <span matListItemLine>{{ productDetail.realClosingDate | date:'mediumDate' }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>Observación Verificación:</span>
+                <span matListItemLine>{{ productDetail.checkObservation }}</span>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <span matListItemTitle>ID Adjunto No Conformidad:</span>
+                <span matListItemLine>{{ productDetail.idNonConformityAttachmentId }}</span>
+            </mat-list-item>
+        </mat-list>
+
+      
+    
+
+
+          <mat-card *ngIf="attachments.length > 0">
+            <mat-card-title>Archivos Adjuntos</mat-card-title>
+          
+            <div *ngFor="let attachment of attachments" style="display: flex; align-items: center;">
+              <ng-container *ngIf="attachment.nonConformityAttachment?.fileName">
+                <span style="flex: 1;">{{ attachment.nonConformityAttachment.fileName }}</span>
+                <button mat-button (click)="downloadFile(attachment.nonConformityAttachment.fileName!)">
+                  <mat-icon>download</mat-icon> Descargar
+                </button>
+              </ng-container>
+            </div>
+          </mat-card>
+
+          
+          
+          
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-stroked-button routerLink="/QSA/non-conformity-product">
+            <mat-icon>arrow_back</mat-icon> Volver a la Lista
+        </button>
+        <!-- Aquí podrías agregar botones para editar, etc. -->
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,220 @@
+<!-- filepath: src/app/qsamax/non-conformity/add-non-conformity-product-dialog/add-non-conformity-product-dialog.component.html -->
+<h2 mat-dialog-title>Agregar Producto No Conforme</h2>
+<mat-dialog-content [formGroup]="addForm">
+  <div class="dialog-grid">
+
+
+    
+
+
+    
+    <div class="form-row">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Orden de produccion</mat-label>
+        <input matInput type="text" placeholder="Buscar OP..." (input)="onWorkorderSearchChange($event)" class="product-search-input">
+        <mat-icon matSuffix>search</mat-icon>
+        <mat-select formControlName="productionOrderId" required>
+          <mat-option *ngFor="let product of filteredWorkOrdersd$ | async" [value]="product.op">
+            {{ product.op }} {{ product.descripcion ? '(' + product.descripcion + ')' : '' }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addForm.get('productionOrderId')?.hasError('required')">Producto es requerido.</mat-error>
+      </mat-form-field>
+
+
+      
+      
+
+      
+
+    <mat-form-field appearance="outline">
+      <mat-label>ID Proyecto</mat-label>
+      <input matInput formControlName="idproject">
+    </mat-form-field>
+</div>
+
+
+<div class="form-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha Fabricación</mat-label>
+      <input matInput [matDatepicker]="pickerManufDate" formControlName="manufacturingDate" required>
+      <mat-datepicker-toggle matSuffix [for]="pickerManufDate"></mat-datepicker-toggle>
+      <mat-datepicker #pickerManufDate></mat-datepicker>
+      <mat-error *ngIf="addForm.get('manufacturingDate')?.hasError('required')">Fecha es requerida.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Producto</mat-label>
+      <input matInput type="text" placeholder="Buscar producto..." (input)="onProductSearchChange($event)" class="product-search-input">
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-select formControlName="idProduct" required>
+        <mat-option *ngFor="let product of filteredProducts$ | async" [value]="product.productId">
+          {{ product.name }} {{ product.description ? '(' + product.description + ')' : '' }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="addForm.get('idProduct')?.hasError('required')">Producto es requerido.</mat-error>
+    </mat-form-field>
+</div>
+
+<div class="form-row"> 
+    <mat-form-field appearance="outline">
+      <mat-label>Proceso que va dirigido</mat-label>
+      <input matInput [value]="departmentName || 'No disponible'" readonly>
+   
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Dirigido</mat-label>
+      <input matInput formControlName="intendedRecipient" [readonly]="!!addForm.get('intendedRecipient')?.value">
+    </mat-form-field>
+</div>
+
+<div class="form-row"> 
+    <mat-form-field appearance="outline">
+      <mat-label>Cantidad Rechazada</mat-label>
+      <input matInput type="number" formControlName="rejectedQuantity" required>
+      <mat-error *ngIf="addForm.get('rejectedQuantity')?.hasError('required')">Cantidad es requerida.</mat-error>
+      <mat-error *ngIf="addForm.get('rejectedQuantity')?.hasError('min')">Debe ser mayor o igual a 0.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Causa No Conformidad</mat-label>
+      <mat-select formControlName="idCauseNonConformity" required>
+        <mat-option *ngFor="let cause of causes$ | async" [value]="cause.causeNonconformityId">
+          {{ cause.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="addForm.get('idCauseNonConformity')?.hasError('required')">Causa es requerida.</mat-error>
+    </mat-form-field>
+</div>
+
+
+<mat-form-field appearance="outline" class="full-width">
+    <mat-label>Comentario Planificación</mat-label>
+    <textarea matInput formControlName="planningComment" rows="3"></textarea>
+  </mat-form-field>
+
+  
+<div class="form-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Disposición</mat-label>
+      <mat-select formControlName="iddisposition" required>
+        <mat-option *ngFor="let disp of dispositions$ | async" [value]="disp.dispositionId">
+          {{ disp.description }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="addForm.get('iddisposition')?.hasError('required')">Disposición es requerida.</mat-error>
+    </mat-form-field>
+
+
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Costo Disposición</mat-label>
+        <input matInput type="number" formControlName="dispositionCost">
+         <mat-error *ngIf="addForm.get('dispositionCost')?.hasError('min')">Debe ser mayor o igual a 0.</mat-error>
+      </mat-form-field>
+
+
+</div>
+
+
+
+<div class="form-row">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Comentario Disposición (DO)</mat-label>
+      <textarea matInput formControlName="doComment" rows="3"></textarea>
+    </mat-form-field>
+
+</div>
+
+
+<div class="form-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha Estimada Cierre</mat-label>
+      <input matInput [matDatepicker]="pickerEstCloseDate" formControlName="estimatedClosingDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerEstCloseDate"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEstCloseDate></mat-datepicker>
+    </mat-form-field>
+
+     <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Observación Disposición (DO)</mat-label>
+      <textarea matInput formControlName="doObservation" rows="3"></textarea>
+    </mat-form-field>
+</div>
+
+  </div>
+
+
+
+  
+  
+
+
+   <!-- Área de drag & drop estilizada -->
+   <div class="file-drop-area" 
+   (dragover)="onDragOver($event)" 
+   (dragleave)="onDragLeave($event)" 
+   (drop)="onDrop($event)">
+
+<div class="file-drop-icon">
+  <mat-icon>cloud_upload</mat-icon>
+</div>
+
+<div class="file-drop-message">
+  Arrastra archivos aquí o
+  <span class="file-select-button">selecciona archivos</span>
+</div>
+
+<!-- Input real (oculto visualmente pero funcional) -->
+<input
+  #fileInput
+  type="file"
+  class="file-input-hidden"
+  (change)="onFilesSelected($event)"
+  multiple
+/>
+
+<!-- Lista de archivos seleccionados pero aún no subidos -->
+<div *ngIf="selectedFiles?.length" class="selected-files-section">
+  <h3>Archivos seleccionados</h3>
+  <div *ngFor="let file of selectedFiles; let i = index" class="file-item">
+    <mat-icon>insert_drive_file</mat-icon>
+    <span>{{ file.name }}</span>
+    <button mat-icon-button (click)="removeSelectedFile(i)" title="Eliminar">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button (click)="uploadSingleFile(file)" title="Subir este archivo">
+      <mat-icon>upload</mat-icon>
+    </button>
+  </div>
+  <div class="file-actions">
+    <button mat-button color="warn" (click)="clearSelectedFiles()">Limpiar selección</button>
+    <button mat-raised-button color="primary" (click)="uploadFiles()">
+      Subir todos los archivos
+    </button>
+  </div>
+</div>
+
+
+<!-- Lista de archivos ya subidos -->
+<div *ngIf="uploadedFiles?.length" class="uploaded-files-section">
+  <h3>Archivos subidos</h3>
+  <div *ngFor="let file of uploadedFiles; let i = index" class="file-item">
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ file.fileName }}</span>
+    <button mat-icon-button (click)="removeUploadedFile(i)" title="Eliminar">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+ 
+</div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+
+  <button mat-stroked-button (click)="onCancel()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="onSave()" [disabled]="addForm.invalid">Guardar</button>
+</mat-dialog-actions>

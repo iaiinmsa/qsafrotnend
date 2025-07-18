@@ -1,0 +1,171 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Metas de Objetivos (Departamento: {{ departmentId || 'N/A' }})</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Objetivos</li>
+        <li class="breadcrumb-item position-relative">Metas de Objetivos</li>
+    </ol>
+</div>
+
+<div *ngIf="!departmentId" class="alert alert-warning">
+    No se ha podido cargar el ID del departamento desde el almacenamiento local.
+</div>
+
+<mat-card *ngIf="departmentId" class="daxa-card to-do-list-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <button mat-stroked-button color="primary" class="ms-2" (click)="openAddDetailDialog(selectedObjectiveForDetail!.id); $event.stopPropagation();">
+                <mat-icon>add_circle_outline</mat-icon> Agregar Meta
+            </button>
+         
+        </mat-card-title>
+        <mat-card-subtitle>
+            <form class="search-box position-relative">
+                <mat-form-field class="w-100">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input
+                        matInput
+                        placeholder="Buscar por nombre..."
+                        class="input-search d-block w-100 border-none outline-0"
+                        #input
+                        (keyup)="applyFilter($event)"
+                    >
+                </mat-form-field>
+            </form>
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="objectives-table">
+
+                <!-- Columnas existentes de la tabla principal -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef>Descripción</th>
+                    <td mat-cell *matCellDef="let element">{{element.description}}</td>
+                </ng-container>
+                <ng-container matColumnDef="goalBase">
+                    <th mat-header-cell *matHeaderCellDef>Meta Base</th>
+                    <td mat-cell *matCellDef="let element">{{element.goalBase}}</td>
+                </ng-container>
+                <ng-container matColumnDef="goalAverage">
+                    <th mat-header-cell *matHeaderCellDef>Meta Promedio</th>
+                    <td mat-cell *matCellDef="let element">{{element.goalAverage}}</td>
+                </ng-container>
+                <ng-container matColumnDef="active">
+                    <th mat-header-cell *matHeaderCellDef>Activo</th>
+                    <td mat-cell *matCellDef="let element">{{element.active ? 'Sí' : 'No'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="departmentId">
+                    <th mat-header-cell *matHeaderCellDef>ID Depto.</th>
+                    <td mat-cell *matCellDef="let element">{{element.departmentId}}</td>
+                </ng-container>
+                <ng-container matColumnDef="usercreate">
+                    <th mat-header-cell *matHeaderCellDef>Creado Por</th>
+                    <td mat-cell *matCellDef="let element">{{element.usercreate}}</td>
+                </ng-container>
+                <ng-container matColumnDef="createdate">
+                    <th mat-header-cell *matHeaderCellDef>Fecha Creación</th>
+                    <td mat-cell *matCellDef="let element">{{element.createdate | date:'short'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="action-info">
+                            <button type="button" mat-icon-button matTooltip="Editar" matTooltipPosition="above" (click)="editObjectiveGoal(element); $event.stopPropagation();">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button type="button" mat-icon-button matTooltip="Eliminar" matTooltipPosition="above" (click)="deleteObjectiveGoal(element); $event.stopPropagation();">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Fila de detalle expandible -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                        <div class="objective-detail-container"
+                             [@detailExpand]="element == selectedObjectiveForDetail ? 'expanded' : 'collapsed'">
+                            <div *ngIf="isLoadingDetail && selectedObjectiveForDetail === element" class="detail-loading">
+                                Cargando detalles...
+                            </div>
+                            <div *ngIf="!isLoadingDetail && selectedObjectiveForDetail === element && detailDataSource.data.length === 0" class="detail-no-data">
+                                No hay metas registradas para este objetivo.
+                                <button mat-stroked-button color="primary" class="ms-2" (click)="openAddDetailDialog(selectedObjectiveForDetail!.id); $event.stopPropagation();">
+                                    <mat-icon>add_circle_outline</mat-icon> Agregar Meta
+                                </button>
+                            </div>
+                            <div *ngIf="!isLoadingDetail && selectedObjectiveForDetail === element && detailDataSource.data.length > 0" class="detail-table-wrapper">
+                                <h6 class="detail-table-title">Metas Registradas para: {{element.name}}</h6>
+                                <table mat-table [dataSource]="detailDataSource" class="detail-table">
+                                    <ng-container matColumnDef="accionesDetail">
+                                        <th mat-header-cell *matHeaderCellDef> Acciones (Meta) </th>
+                                        <td mat-cell *matCellDef="let detail">
+                                         
+                                            <button mat-icon-button matTooltip="Eliminar Meta" (click)="deleteObjectiveGoalDetail(detail, element.id); $event.stopPropagation();">
+                                                <mat-icon>delete_outline</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="idObjgoal">
+                                        <th mat-header-cell *matHeaderCellDef>ID Meta</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.idObjgoal}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="currentGoal">
+                                        <th mat-header-cell *matHeaderCellDef>Meta Actual</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.currentGoal}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="month">
+                                        <th mat-header-cell *matHeaderCellDef>Mes</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.month}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="years">
+                                        <th mat-header-cell *matHeaderCellDef>Año</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.years}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="usercreate">
+                                        <th mat-header-cell *matHeaderCellDef>Creado Por (Meta)</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.usercreate}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="createdate">
+                                        <th mat-header-cell *matHeaderCellDef>Fecha Creación (Meta)</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.createdate | date:'short'}}</td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDetail; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let detailRow; columns: displayedColumnsDetail;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    class="objective-row"
+                    (click)="toggleObjectiveDetail(row)">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="objective-detail-row"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                        No hay metas de objetivos para el departamento seleccionado o no se pudo cargar el ID del departamento.
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,20 @@
+// filepath: c:\Users\INMSA ARGO\Proyectos\qsamaxfro\qsamaxfro\qsafrotnend\src\app\authentication\welcome\welcome.component.scss
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh; /* Ocupa la mayor parte de la altura de la vista */
+    text-align: center;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #3f51b5; /* Color primario de Angular Material (indigo) */
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }

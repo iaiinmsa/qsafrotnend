@@ -1,0 +1,58 @@
+<div class="popup-dialog">
+    <mat-card class="daxa-card mb-0 border-radius bg-white border-none d-block">
+        <mat-card-header class="mb-15">
+            <mat-card-title>
+                <h5 class="mb-0">
+                    Agregar Detalle de Meta para Objetivo ID: {{ idObjective }}
+                </h5>
+            </mat-card-title>
+            <mat-card-subtitle>
+                <button mat-icon-button (click)="onCancel()" class="dialog-close-button">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="detailForm" (ngSubmit)="onSave()">
+                <div class="row">
+                    <div class="col-md-12 mb-15">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Meta Actual (Ej: 95.50)</mat-label>
+                            <input matInput type="text" placeholder="90.00" formControlName="currentGoal">
+                            <mat-error *ngIf="detailForm.get('currentGoal')?.hasError('required')">
+                                La meta actual es requerida.
+                            </mat-error>
+                            <mat-error *ngIf="detailForm.get('currentGoal')?.hasError('pattern')">
+                                Ingrese un número válido (ej: 90 o 90.50).
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-12 mb-15">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Mes y Año de la Meta</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="selectedDate" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker
+                                            startView="multi-year"
+                                            (yearSelected)="setMonthAndYear($event, picker)"
+                                            (monthSelected)="setMonthAndYear($event, picker); picker.close()">
+                            </mat-datepicker>
+                             <mat-error *ngIf="detailForm.get('selectedDate')?.hasError('required')">
+                                La fecha es requerida.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div mat-dialog-actions align="end" class="mt-20 dialog-actions-container">
+                    <button mat-stroked-button type="button" (click)="onCancel()" class="me-10">
+                        Cancelar
+                    </button>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="detailForm.invalid">
+                        Guardar Detalle
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

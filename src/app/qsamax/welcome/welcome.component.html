@@ -1,0 +1,32 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        Pagina en blanco
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">
+            Blank Page
+        </li>
+    </ol>
+</div>
+
+<!-- Content goes here... -->
+ <!-- filepath: c:\Users\INMSA ARGO\Proyectos\qsamaxfro\qsamaxfro\qsafrotnend\src\app\authentication\welcome\welcome.component.html -->
+<div class="welcome-container">
+    <div *ngIf="userEmail; else genericWelcome">
+      <h1>¡Bienvenido al Sistema, {{ userEmail }}!</h1>
+    </div>
+    <ng-template #genericWelcome>
+      <h1>¡Bienvenido al Sistema!</h1>
+    </ng-template>
+    <p>Has iniciado sesión exitosamente.</p>
+    <p>
+      <a mat-flat-button color="primary" routerLink="/">Ir al Dashboard</a>
+    </p>
+  </div>

@@ -1,0 +1,59 @@
+.popup-dialog {
+    mat-card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important; // Sombra más pronunciada para el card
+    }
+
+    mat-card-header {
+        padding-bottom: 10px; // Espacio debajo del header
+        border-bottom: 1px solid #eee; // Línea sutil para separar header del contenido
+        position: relative; // Para posicionar el botón de cierre
+    }
+
+    .dialog-close-button {
+        position: absolute;
+        top: 50%;
+        right: 0px;
+        transform: translateY(-50%);
+    }
+
+    mat-card-title h5 {
+        font-size: 1.1rem; // Tamaño de fuente del título ligeramente mayor
+        font-weight: 500; // Peso de la fuente
+    }
+
+    mat-card-content {
+        padding-top: 20px; // Más espacio arriba del contenido del formulario
+        padding-bottom: 10px;
+    }
+
+    // Clases de utilidad para márgenes
+    .mb-15 {
+        margin-bottom: 15px !important;
+    }
+
+    .mt-20 {
+        margin-top: 20px !important;
+    }
+
+    .me-10 {
+        margin-right: 10px !important; // Para el botón cancelar
+    }
+    
+    .dialog-actions-container {
+        padding-top: 10px;
+        border-top: 1px solid #eee; // Línea sutil para separar acciones del formulario
+    }
+
+   
+
+    // Estilo para el checkbox
+    mat-checkbox {
+        font-size: 0.95rem;
+    }
+}
+
+// Si estás usando Bootstrap y quieres que las columnas tengan un poco de padding interno
+// .row > [class*='col-'] {
+//   padding-left: 7.5px;
+//   padding-right: 7.5px;
+// }

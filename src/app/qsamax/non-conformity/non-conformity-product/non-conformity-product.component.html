@@ -1,0 +1,206 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">No Conformidades de Productos (Depto: {{ departmentId || 'N/A' }})</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i> Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">No Conformidades</li>
+        <li class="breadcrumb-item position-relative">Productos</li>
+    </ol>
+</div>
+
+<div *ngIf="!departmentId && !isLoading" class="alert alert-warning">
+    No se ha podido cargar el ID del departamento. No se pueden mostrar las no conformidades.
+</div>
+<div *ngIf="isLoading" class="alert alert-info">Cargando datos...</div>
+
+<mat-card *ngIf="departmentId" class="daxa-card to-do-list-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <!-- Botón para agregar nueva no conformidad -->
+            <!-- <button mat-stroked-button color="primary" (click)="openAddNonConformityDialog()">
+                <mat-icon>add_circle_outline</mat-icon> Agregar No Conformidad
+            </button> -->
+            <button mat-stroked-button color="primary" (click)="openAddNonConformityDialog()">
+                <mat-icon>add_circle_outline</mat-icon> Agregar Producto No Conforme
+            </button>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <form class="search-box position-relative">
+                <mat-form-field class="w-100">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput placeholder="Buscar..." class="input-search d-block w-100 border-none outline-0" #input (keyup)="applyFilter($event)">
+                </mat-form-field>
+            </form>
+        </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="main-table">
+
+
+                <ng-container matColumnDef="nonConformingProductId">
+                    <th mat-header-cell *matHeaderCellDef>ID No Conformidad</th>
+                    <td mat-cell *matCellDef="let element">{{element.nonConformingProductId}}</td>
+                </ng-container>
+
+                <!-- Columna ID Principal -->
+                <ng-container matColumnDef="productionOrderId">
+                    <th mat-header-cell *matHeaderCellDef>ID Orden Prod.</th>
+                    <td mat-cell *matCellDef="let element">{{element.productionOrderId}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="idProduct">
+                    <th mat-header-cell *matHeaderCellDef>ID Producto</th>
+                    <td mat-cell *matCellDef="let element">{{element.idProduct}} {{element.productName ? '(' + element.productName + ')' : ''}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="manufacturingDate">
+                    <th mat-header-cell *matHeaderCellDef>Fecha Fab.</th>
+                    <td mat-cell *matCellDef="let element">{{element.manufacturingDate | date:'shortDate'}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="rejectedQuantity">
+                    <th mat-header-cell *matHeaderCellDef>Cant. Rechazada</th>
+                    <td mat-cell *matCellDef="let element">{{element.rejectedQuantity}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="idCauseNonConformity">
+                    <th mat-header-cell *matHeaderCellDef>Causa NC</th>
+                    <td mat-cell *matCellDef="let element">{{element.idCauseNonConformity}} {{element.causeNonConformityName ? '(' + element.causeNonConformityName + ')' : ''}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="departmentId">
+                    <th mat-header-cell *matHeaderCellDef>ID Depto.</th>
+                    <td mat-cell *matCellDef="let element">{{element.departmentId}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="creationDate">
+                    <th mat-header-cell *matHeaderCellDef>Fecha Creación</th>
+                    <td mat-cell *matCellDef="let element">{{element.creationDate | date:'short'}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="action-info">
+                            <!-- <button type="button" mat-icon-button matTooltip="Editar" (click)="editNonConformityProduct(element); $event.stopPropagation();">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button type="button" mat-icon-button matTooltip="Eliminar" (click)="deleteNonConformityProduct(element); $event.stopPropagation();">
+                                <mat-icon>delete</mat-icon>
+                            </button> -->
+                              <button type="button" mat-icon-button matTooltip="Ver Detalle Completo"
+                            [routerLink]="['/QSA/non-conformity-product', element.nonConformingProductId]">
+                        <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button type="button" mat-icon-button matTooltip="Ver Detalles" (click)="toggleProductDetail(element); $event.stopPropagation();">
+                                <mat-icon>{{selectedProductForDetail === element ? 'unfold_less' : 'unfold_more'}}</mat-icon>
+                            </button>
+
+                          
+
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Fila de detalle expandible -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                        <div class="detail-container" [@detailExpand]="element == selectedProductForDetail ? 'expanded' : 'collapsed'">
+                            <div *ngIf="isLoadingDetail && selectedProductForDetail === element" class="detail-loading">
+                                Cargando detalles...
+                            </div>
+                            <div *ngIf="!isLoadingDetail && selectedProductForDetail === element && detailDataSource.data.length > 0">
+                                <h6 class="detail-table-title">Detalles de No Conformidad: {{element.productionOrderId}}</h6>
+                                <table mat-table [dataSource]="detailDataSource" class="detail-table">
+                                    <!-- Columnas de Detalle -->
+                                    <ng-container matColumnDef="idproject">
+                                        <th mat-header-cell *matHeaderCellDef>ID Proyecto</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.idproject}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="createdBy">
+                                        <th mat-header-cell *matHeaderCellDef>Creado Por</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.createdBy}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="intendedRecipient">
+                                        <th mat-header-cell *matHeaderCellDef>Destinatario</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.intendedRecipient}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="planningComment">
+                                        <th mat-header-cell *matHeaderCellDef>Comentario Plan.</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.planningComment}}</td>
+                                    </ng-container>
+                                     <ng-container matColumnDef="iddisposition">
+                                        <th mat-header-cell *matHeaderCellDef>Disposición</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.iddisposition}} {{detail.dispositionName ? '(' + detail.dispositionName + ')' : ''}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="doComment">
+                                        <th mat-header-cell *matHeaderCellDef>Comentario DO</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.doComment}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="dispositionCost">
+                                        <th mat-header-cell *matHeaderCellDef>Costo Disposición</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.dispositionCost | currency}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="estimatedClosingDate">
+                                        <th mat-header-cell *matHeaderCellDef>Fecha Cierre Est.</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.estimatedClosingDate | date:'shortDate'}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="doObservation">
+                                        <th mat-header-cell *matHeaderCellDef>Observación DO</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.doObservation}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="approvedProject">
+                                        <th mat-header-cell *matHeaderCellDef>Aprob. Proyecto</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.approvedProject ? 'Sí' : 'No'}} ({{detail.approvedProjectUser}})</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="approvedFinancialManagement">
+                                        <th mat-header-cell *matHeaderCellDef>Aprob. Finanzas</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.approvedFinancialManagement ? 'Sí' : 'No'}} ({{detail.approvedFinancialManagementUser}})</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="approvedGeneralManagement">
+                                        <th mat-header-cell *matHeaderCellDef>Aprob. General</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.approvedGeneralManagement ? 'Sí' : 'No'}} ({{detail.approvedGeneralManagementUser}})</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="realClosingDate">
+                                        <th mat-header-cell *matHeaderCellDef>Fecha Cierre Real</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.realClosingDate | date:'shortDate'}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="checkObservation">
+                                        <th mat-header-cell *matHeaderCellDef>Observación Verif.</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.checkObservation}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="idNonConformityAttachmentId">
+                                        <th mat-header-cell *matHeaderCellDef>ID Adjunto</th>
+                                        <td mat-cell *matCellDef="let detail">{{detail.idNonConformityAttachmentId}}</td>
+                                    </ng-container>
+                                    <!-- Agrega aquí más columnas de detalle según necesites -->
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDetail; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let detailRow; columns: displayedColumnsDetail;"></tr>
+                                </table>
+                            </div>
+                            <div *ngIf="!isLoadingDetail && selectedProductForDetail === element && detailDataSource.data.length === 0" class="detail-no-data">
+                                No hay detalles adicionales para mostrar para este producto.
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="main-row" (click)="toggleProductDetail(row)"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                        No hay no conformidades de productos para mostrar.
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

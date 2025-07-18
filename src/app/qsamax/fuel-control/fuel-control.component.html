@@ -1,0 +1,101 @@
+<h2 mat-dialog-title>Registrar Consumo de Combustible</h2>
+
+
+<form [formGroup]="fuelForm" (ngSubmit)="onSubmit()">
+
+
+<mat-dialog-content [formGroup]="fuelForm">
+  <div class="dialog-grid">
+    <!-- Fecha -->
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Fecha de Orden</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="orderDate" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Orden de producción -->
+  
+            <mat-form-field appearance="outline">
+        <mat-label>Orden de produccion</mat-label>
+        <input matInput type="text" placeholder="Buscar OP..." (input)="onWorkOrderSearchChange($event)" class="product-search-input">
+        <mat-icon matSuffix>search</mat-icon>
+        <mat-select formControlName="productionorderid" required>
+          <mat-option *ngFor="let product of filteredWorkOrdersd$ | async" [value]="product.op">
+            {{ product.op }} {{ product.descripcion ? '(' + product.descripcion + ')' : '' }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="fuelForm.get('productionOrderId')?.hasError('required')">Producto es requerido.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Actividad y Vehículo -->
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Actividad</mat-label>
+        <input matInput formControlName="activity" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Vehículo</mat-label>
+        <mat-select formControlName="carId" (selectionChange)="onCarChange($event.value)" required>
+          <mat-option *ngFor="let car of cars" [value]="car.id">{{ car.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Operador y Lectura Inicial -->
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Operador</mat-label>
+        <mat-select formControlName="transportoperatorid" required>
+          <mat-option *ngFor="let op of operators" [value]="op.id">{{ op.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Lectura Inicial</mat-label>
+        <input matInput type="number" formControlName="initialreading" required>
+      </mat-form-field>
+    </div>
+
+    <!-- Lectura Final y Parcial -->
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Lectura Final</mat-label>
+        <input matInput type="number" formControlName="finalreeading" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Parcial</mat-label>
+        <input matInput type="number" formControlName="partial" readonly required>
+      </mat-form-field>
+    </div>
+
+    <!-- Consumo solo -->
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field full-width">
+        <mat-label>Consumo</mat-label>
+        <input matInput type="number" formControlName="consume" required>
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+
+
+<div *ngIf="showSuccessMessage" class="alert alert-bg-success d-flex align-items-center" role="alert">
+  <i class="thumb_up_alt"></i>
+  Se agregó exitosamente el consumo de combustible.
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancelar</button>
+  <button mat-flat-button color="primary" type="submit" [disabled]="fuelForm.invalid">Guardar</button>
+</mat-dialog-actions>
+
+
+
+
+</form>

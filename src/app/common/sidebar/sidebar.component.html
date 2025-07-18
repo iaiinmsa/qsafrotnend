@@ -1,0 +1,282 @@
+<div
+    class="sidebar-area bg-white"
+    [ngClass]="{'active': isSidebarToggled}"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.dark-sidebar]="themeService.isSidebarDark()"
+    [class.right-sidebar]="themeService.isRightSidebar()"
+    [class.hide-sidebar]="themeService.isHideSidebar()"
+    [class.card-borderd-theme]="themeService.isCardBorder()"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <div class="logo bg-white">
+        <a routerLink="/" class="d-flex align-items-center">
+            <img src="images/logo-icon.svg" alt="logo-icon">
+            <span class="fw-semibold">QSAMax</span>
+        </a>
+    </div>
+    <div
+        (click)="toggle()"
+        class="burger-menu"
+        [ngClass]="{'active': isSidebarToggled}"
+    >
+        <span class="top-bar"></span>
+        <span class="middle-bar"></span>
+        <span class="bottom-bar"></span>
+    </div>
+    <ng-scrollbar visibility="hover">
+        <div class="sidebar-inner">
+            <div class="sidebar-menu">
+                <mat-accordion>
+                   
+                 
+                 
+                 
+                 
+                 
+                
+             
+                    <span class="sub-title text-body">
+                        PAGES
+                    </span>
+                 
+
+
+                  
+              
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    target
+                                    </i>
+                             
+                                <span class="title">
+                                    Objetivos
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/Objectives" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('Creador de Objetivos')"> 
+                                    Objetivos
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/Objectives/Objectives-goal" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('crea objetivo det')">
+                                    Metas Objetivos
+                                </a>
+                            </li>
+                        
+                        </ul>
+                    </mat-expansion-panel>
+
+
+                    
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    security
+                                    </i>
+                             
+                                <span class="title">
+                                    QSA
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/QSA/non-conformity-product" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('Creador de Objetivos')"> 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    backpack
+                                </i>
+                                    PNC
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/Objectives/Objectives-goal" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('crea objetivo det')">
+                                    Metas Objetivos
+                                </a>
+                            </li>
+                        
+                        </ul>
+                    </mat-expansion-panel>
+
+
+                             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    store
+                                    </i>
+                             
+                                <span class="title">
+                                    Compras
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/OPERACIONES/fuelcontrol" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('CombustibleControl')"> 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    ev_station
+                                </i>
+                                    Control Combustible
+                                </a>
+                            </li>
+                         
+                        
+                        </ul>
+                    </mat-expansion-panel>
+
+                
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    person
+                                </i>
+                                <span class="title">
+                                    Usuarios
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Usuarios
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Team Members
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/users/users-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Users List
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/users/add-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Add User
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+
+              
+              
+
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    lock_open
+                                </i>
+                                <span class="title">
+                                    Authentication
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/authentication" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Sign In
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/authentication/sign-up" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Sign Up
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/authentication/forgot-password" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Forgot Password
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/authentication/reset-password" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Reset Password
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/authentication/confirm-email" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Confirm Email
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/authentication/lock-screen" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Lock Screen
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/authentication/logout" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                 (click)="clearUserEmailFromStorage()" >
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+
+                   
+               
+
+                  <!--   <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    settings
+                                </i>
+                                <span class="title">
+                                    Settings
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Account Settings
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/settings/change-password" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Change Password
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/settings/connections" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Connections
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/settings/privacy-policy" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Privacy Policy
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/settings/terms-conditions" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Terms & Conditions
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel> -->
+
+                  
+                    <a routerLink="/authentication/logout" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                    (click)="clearUserEmailFromStorage()" >
+                        <i class="material-symbols-outlined">
+                            logout
+                        </i>
+                        <span class="title">Logout</span>
+                    </a>
+                </mat-accordion>
+            </div>
+        </div>
+    </ng-scrollbar>
+</div>

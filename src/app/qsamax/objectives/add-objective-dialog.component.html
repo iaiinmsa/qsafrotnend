@@ -1,0 +1,66 @@
+<div class="popup-dialog">
+    <mat-card class="daxa-card mb-0 border-radius bg-white border-none d-block">
+        <mat-card-header class="mb-15">
+            <mat-card-title>
+                <h5 class="mb-0">
+                    Agregar Nuevo Objetivo
+                </h5>
+            </mat-card-title>
+            <mat-card-subtitle>
+                <button mat-icon-button (click)="onCancel()" class="dialog-close-button">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <form (ngSubmit)="onSave()" #objectiveForm="ngForm">
+                <div class="row">
+                    <div class="col-md-12 mb-15">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Nombre del Objetivo</mat-label>
+                            <input matInput placeholder="Ej. Reducir incidentes" [(ngModel)]="objectiveData.name" name="name" required #nameInput="ngModel">
+                            <mat-error *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)">
+                                El nombre es requerido.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12 mb-15">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Descripción</mat-label>
+                            <textarea matInput placeholder="Descripción detallada del objetivo" [(ngModel)]="objectiveData.description" name="description" rows="3"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 mb-15">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Meta Base</mat-label>
+                            <input matInput placeholder="Ej. 90" [(ngModel)]="objectiveData.goalBase" name="goalBase" required #goalBaseInput="ngModel">
+                             <mat-error *ngIf="goalBaseInput.invalid && (goalBaseInput.dirty || goalBaseInput.touched)">
+                                La meta base es requerida.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                     <div class="col-md-6 mb-15">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>ID Departamento</mat-label>
+                            <input matInput type="number" placeholder="Ej. 1" [(ngModel)]="objectiveData.departmentId" name="departmentId" required #departmentIdInput="ngModel" [readonly]="true">
+                            <mat-error *ngIf="departmentIdInput.invalid && (departmentIdInput.dirty || departmentIdInput.touched)">
+                                El ID de departamento es requerido.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12 mb-15 d-flex align-items-center">
+                        <mat-checkbox [(ngModel)]="objectiveData.active" name="active" class="me-1">Activo</mat-checkbox>
+                    </div>
+                </div>
+                <div mat-dialog-actions align="end" class="mt-20 dialog-actions-container">
+                    <button mat-stroked-button type="button" (click)="onCancel()" class="me-10">
+                        Cancelar
+                    </button>
+                    <button mat-raised-button color="primary" type="submit" [disabled]="!objectiveForm.form.valid">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

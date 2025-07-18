@@ -1,0 +1,356 @@
+.sign-in-area {
+    height: 100vh;
+    overflow-x: hidden;
+    padding: {
+        top: 30px;
+        bottom: 30px;
+    };
+}
+.daxa-form {
+    max-width: 930px;
+    padding: 100px;
+
+    .title {
+        margin-bottom: 25px;
+
+        h3 {
+            margin-bottom: 6px;
+        }
+    }
+    form {
+        .form-group {
+            margin-bottom: 22px;
+            
+            .main-label {
+                margin-bottom: 12px;
+            }
+            .error {
+                font-size: 14px;
+                margin-top: 7px;
+            }
+        }
+        .info {
+            a {
+                position: relative;
+                top: 2px;
+            }
+        }
+
+        // CORREGIDO: Selector para el botón de Sign In
+        .daxa-button { // Apunta a la clase 'daxa-button' del HTML
+            // Estos estilos se aplicarán si el botón es un botón de Material
+            // Angular Material añade clases como .mat-mdc-raised-button al elemento renderizado
+            &.mat-mdc-raised-button, // Específico para mat-raised-button
+            &.mat-mdc-button {       // Un fallback más general para otros botones de Material si es necesario
+                // Estilos base que estaban bajo .btn
+                border: 0; // Quitar el borde por defecto si lo hubiera
+                width: 100%;
+                height: auto;
+                display: block;
+                min-width: auto;
+                min-height: auto;
+                margin-top: 22px;
+                padding: 17px 30px;
+                font-weight: normal;
+                box-sizing: border-box; // Buena práctica para padding y border
+
+                // Estado HABILITADO (formulario válido)
+                color: var(--whiteColor); // Texto blanco
+                background-color: var(--daxaColor); // Fondo azul (asegúrate que --daxaColor esté definido como azul)
+
+                // Estado DESHABILITADO (formulario inválido o cargando)
+                &[disabled] {
+                    background-color: transparent !important; // Fondo transparente, !important para asegurar precedencia
+                    border: 1px solid var(--daxaColor);     // Borde azul para visibilidad
+                    color: var(--daxaColor);                 // Texto azul para visibilidad
+                    // opacity: 0.7; // Opcional: si quieres que se vea un poco más tenue
+                }
+            }
+        }
+
+        .signin-with-socials {
+            margin-top: 22px;
+
+            .or {
+                z-index: 1;
+
+                span {
+                    background-color: var(--whiteColor);
+                    padding: {
+                        left: 25px;
+                        right: 25px;
+                    };
+                }
+                &::before {
+                    left: 0;
+                    right: 0;
+                    top: 50%;
+                    height: 1px;
+                    content: '';
+                    z-index: -1;
+                    margin-top: 2px;
+                    position: absolute;
+                    background: #dae0ec;
+                    transform: translateY(-50%);
+                }
+            }
+            .socials {
+                margin-top: 15px;
+
+                .mat-mdc-button { // Estos son los botones de redes sociales, pueden mantener su estructura
+                    padding: 0;
+                    width: 30px;
+                    height: 30px;
+                    min-width: auto;
+                    border-radius: 50%;
+                    display: inline-block;
+                    color: var(--whiteColor);
+                    background-color: var(--daxaColor);
+                    margin: {
+                        left: 5px;
+                        right: 5px;
+                    };
+                    &:first-child {
+                        margin-left: 0;
+                    }
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    &.facebook {
+                        background-color: #3a559f;
+                    }
+                    &.twitter {
+                        background-color: rgba(15, 20, 25, 1);
+                    }
+                    &.google {
+                        background-color: #e02f2f;
+                    }
+                    &.linkedin {
+                        background-color: #007ab9;
+                    }
+                }
+            }
+        }
+    }
+    &.card-borderd-theme {
+        box-shadow: var(--borderBoxShadow) !important;
+    }
+    &.component-dark-theme {
+        form {
+            // CORREGIDO: Selector para el botón de Sign In en tema oscuro
+            .daxa-button {
+                &.mat-mdc-raised-button,
+                &.mat-mdc-button {
+                    // Estado HABILITADO en tema oscuro
+                    color: var(--whiteColor); // O el color de texto apropiado para el tema oscuro
+                    background-color: var(--daxaColorDark, var(--daxaColor)); // Fondo azul (o color oscuro primario)
+
+                    // Estado DESHABILITADO en tema oscuro
+                    &[disabled] {
+                        background-color: transparent !important;
+                        border: 1px solid var(--daxaColorDark, var(--daxaColor)); // Borde del color primario oscuro
+                        color: var(--daxaColorDark, var(--daxaColor));           // Texto del color primario oscuro
+                        opacity: 0.7; // Ajustar opacidad si es necesario
+                    }
+                }
+            }
+            .signin-with-socials {
+                .or {
+                    span {
+                        background-color: #1b232d;
+                    }
+                    &::before {
+                        background: rgba(255, 255, 255, 0.09);
+                    }
+                }
+            }
+        }
+    }
+}
+::ng-deep {
+    .daxa-form {
+        form {
+            .mat-mdc-checkbox {
+                .mdc-checkbox {
+                    padding: 0;
+                    margin: 0;
+
+                    .mdc-checkbox__native-control {
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        width: 100%;
+                        height: 100%;
+                    }
+                    .mdc-checkbox__background {
+                        top: 0;
+                        left: 0;
+                    }
+                    .mat-mdc-checkbox-ripple, .mdc-checkbox__ripple {
+                        border-radius: 2px;
+                    }
+                    .mat-mdc-checkbox-touch-target {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .mdc-label {
+                    color: var(--bodyColor);
+                    margin-left: 9px;
+                }
+            }
+        }
+        &.rtl-enabled {
+            form {
+                .mat-mdc-checkbox {
+                    .mdc-label {
+                        margin: {
+                            left: 0;
+                            right: 9px;
+                        };
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .sign-in-area {
+        padding: {
+            left: 12.5px;
+            right: 12.5px;
+        };
+    }
+    .daxa-form {
+        max-width: 100%;
+        padding: 35px 15px;
+    
+        .title {
+            margin-bottom: 20px;
+    
+            h3 {
+                margin-bottom: 5px;
+            }
+        }
+        form {
+            .form-group {
+                margin-bottom: 18px;
+            }
+            // Si el botón daxa-button necesita ajustes específicos en media queries, aplícalos aquí
+            .daxa-button { // Aplicar a .daxa-button en lugar de .btn
+                &.mat-mdc-raised-button,
+                &.mat-mdc-button {
+                    margin-top: 18px;
+                    padding: 14px 30px;
+                }
+            }
+            .signin-with-socials {
+                margin-top: 18px;
+    
+                .or {
+                    span {
+                        padding: {
+                            left: 15px;
+                            right: 15px;
+                        };
+                    }
+                }
+                .socials {
+                    margin-top: 13px;
+                }
+            }
+        }
+    }
+    ::ng-deep {
+        .daxa-form {
+            form {
+                .mat-mdc-checkbox {
+                    .mdc-label {
+                        margin-left: 3px;
+                    }
+                }
+            }
+            &.rtl-enabled {
+                form {
+                    .mat-mdc-checkbox {
+                        .mdc-label {
+                            margin: {
+                                left: 0;
+                                right: 3px;
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {
+
+    .daxa-form {
+        max-width: 540px;
+    }
+
+}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .sign-in-area {
+        padding: {
+            left: 12.5px;
+            right: 12.5px;
+        };
+    }
+    .daxa-form {
+        max-width: 720px;
+        padding: 70px;
+    
+        .title {
+            margin-bottom: 20px;
+        }
+        form {
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .daxa-button { // Aplicar a .daxa-button en lugar de .btn
+                &.mat-mdc-raised-button,
+                &.mat-mdc-button {
+                    margin-top: 20px;
+                }
+            }
+            .signin-with-socials {
+                margin-top: 20px;
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .daxa-form {
+        padding: 90px;
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    .daxa-form {
+        padding: 100px 130px;
+    }
+
+}
