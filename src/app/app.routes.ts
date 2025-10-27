@@ -201,6 +201,13 @@ import { NonConformityProductComponent } from './qsamax/non-conformity/non-confo
 import { NonConformityProductDetailComponent } from './qsamax/non-conformity/non-conformity-product/non-conformity-product-detail.component';
 import { FuelControlComponent } from './qsamax/fuel-control/fuel-control.component';
 import { FuelConsumptionComponent } from './qsamax/fuel-control/fuel-consumption.component';
+import { PlanListComponent } from './qsamax/planos-op/plan-list.component';
+import { SqlViewerComponent } from './qsamax/sql-viewer/sql-viewer.component';
+import { VacationRequestComponent } from './qsamax/vacation-request/vacation-request.component';
+import { VacationAssociatesComponent } from './qsamax/vacation-request/associates/vaction-associates.component';
+import { VacationSupervisorComponent } from './qsamax/vacation-request/supervisor/vaction-supervisor.component';
+import { VacationReportComponent } from './qsamax/vacation-request/vacation-report/vacation-report.component';
+import { ManufacturingOrderComponent } from './qsamax/manufacturing-order/manufacturing-order.component';
 
 
 export const routes: Routes = [
@@ -242,7 +249,58 @@ export const routes: Routes = [
     },
 
     
+     {
+        path: 'DYD',
+        component: EcommercePageComponent,
+        children: [
+            
+            {path: 'planosop', component: PlanListComponent}
+       
 
+         
+        ]
+    },
+       {
+        path: 'ia',
+        component: EcommercePageComponent,
+        children: [
+            
+            {path: 'op', component: SqlViewerComponent}
+       
+
+         
+        ]
+    },
+
+        {
+        path: 'mercadeo',
+        component: EcommercePageComponent,
+        children: [
+            
+            {path: 'op', component: ManufacturingOrderComponent}
+       
+
+         
+        ]
+    },
+
+    
+
+           {
+        path: 'rrhh',
+        component: EcommercePageComponent,
+        children: [
+            
+            {path: 'Vacaciones', component: VacationRequestComponent},
+            {path: 'VacacionesAsociados', component: VacationAssociatesComponent},
+             {path: 'Vacacionessupervisor', component: VacationSupervisorComponent},
+             {path: 'Vacationreport', component: VacationReportComponent},
+       
+
+         
+        ]
+    },
+    
 
     {
         path: 'welcome', // Nueva ruta de bienvenida

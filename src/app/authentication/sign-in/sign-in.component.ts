@@ -83,6 +83,7 @@ export class SignInComponent {
               this.storageService.setCurrentUserEmail(response.user.useremail);
               this.storageService.setDepartmentId(response.user.departmentId.toString());
               this.storageService.setDepartmentName(response.user.department.name.toString());
+              this.storageService.setEmail(credentials.email);
   
               if (response.user.user_roles && Array.isArray(response.user.user_roles) && response.user.user_roles.length > 0) {
                 const roleNames = response.user.user_roles.map(userRoleObj => {

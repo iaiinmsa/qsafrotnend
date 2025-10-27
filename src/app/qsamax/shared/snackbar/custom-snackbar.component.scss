@@ -1,0 +1,30 @@
+.snackbar-container {
+  display: flex;
+  align-items: center;
+  background-color: #4caf50 !important;
+  color: white !important;
+  padding: 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+
+.snackbar-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* espacio entre todos los elementos */
+}
+
+.snackbar-container mat-icon {
+  font-size: 24px; /* tamaño de iconos */
+  /* opcional: agregar margen si quieres más espacio específico */
+}
+
+.snackbar-container span {
+  flex-grow: 1; /* para que el texto ocupe el espacio restante */
+}
+
+.snackbar-container button {
+  margin-left: 8px; /* espacio extra si quieres antes del botón */
+}

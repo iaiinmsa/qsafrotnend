@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>Subir Plano</h2>
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <input matInput placeholder="Usuario" formControlName="user_name" readonly />
+  </mat-form-field>
+ 
+       <!-- Orden de producción -->
+  
+            <mat-form-field appearance="outline">
+        <mat-label>Orden de produccion</mat-label>
+        <input matInput type="text" placeholder="Buscar OP..." (input)="onWorkOrderSearchChange($event)"
+          class="product-search-input">
+        <mat-icon matSuffix>search</mat-icon>
+        <mat-select formControlName="production_order"
+        (selectionChange)="onWorkOrderSelected($event)"
+
+        required>
+          <mat-option *ngFor="let product of filteredWorkOrdersd$ | async" [value]="product.op">
+            {{ product.op }} {{ product.descripcion ? '(' + product.descripcion + ')' : '' }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('production_order')?.hasError('required')">Producto es requerido.</mat-error>
+      </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Proyecto" formControlName="project_name" />
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+  <mat-label>Tipo de Plano</mat-label>
+  <mat-select formControlName="plan_type">
+    <mat-option *ngFor="let tipo of planTypes" [value]="tipo.idplanttype">
+      {{ tipo.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+   <!-- Área de drag & drop estilizada -->
+   <div class="file-drop-area" 
+   (dragover)="onDragOver($event)" 
+   (dragleave)="onDragLeave($event)" 
+   (drop)="onDrop($event)">
+
+<div class="file-drop-icon">
+  <mat-icon>cloud_upload</mat-icon>
+</div>
+
+<div class="file-drop-message">
+  Arrastra archivos aquí o
+  <span class="file-select-button">selecciona archivos</span>
+</div>
+
+<!-- Input real (oculto visualmente pero funcional) -->
+<input
+  #fileInput
+  type="file"
+  class="file-input-hidden"
+  (change)="onFilesSelected($event)"
+  multiple
+/>
+
+<!-- Lista de archivos seleccionados pero aún no subidos -->
+<div *ngIf="selectedFiles?.length" class="selected-files-section">
+  <h3>Archivos seleccionados</h3>
+  <div *ngFor="let file of selectedFiles; let i = index" class="file-item">
+    <mat-icon>insert_drive_file</mat-icon>
+    <span>{{ file.name }}</span>
+    <button mat-icon-button (click)="removeSelectedFile(i)" title="Eliminar">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button (click)="uploadSingleFile(file)" title="Subir este archivo">
+      <mat-icon>upload</mat-icon>
+    </button>
+  </div>
+  <div class="file-actions">
+    <button mat-button color="warn" (click)="clearSelectedFiles()">Limpiar selección</button>
+    <button mat-raised-button color="primary" (click)="uploadFiles($event)">
+      Subir todos los archivos
+    </button>
+  </div>
+</div>
+
+
+<!-- Lista de archivos ya subidos -->
+<div *ngIf="uploadedFiles?.length" class="uploaded-files-section">
+  <h3>Archivos subidos</h3>
+  <div *ngFor="let file of uploadedFiles; let i = index" class="file-item">
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ file.fileName }}</span>
+    <button mat-icon-button (click)="removeUploadedFile(i)" title="Eliminar">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+ 
+</div>
+
+
+
+
+  <mat-form-field>
+    <input matInput placeholder="Revisión" formControlName="plan_review" />
+  </mat-form-field>
+ 
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-button color="primary" (click)="submit()" [disabled]="form.invalid">Subir</button>
+</mat-dialog-actions>

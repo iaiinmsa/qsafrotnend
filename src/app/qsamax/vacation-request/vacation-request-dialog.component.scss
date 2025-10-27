@@ -1,0 +1,21 @@
+.two-columns {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr; /* dos columnas iguales */
+  gap: 16px; /* espacio entre columnas y filas */
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+mat-dialog-content {
+  width: 100%;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-start; /* o space-between */
+  flex-wrap: wrap; /* por si no caben */
+  gap: 8px;
+  margin-top: 16px;
+}

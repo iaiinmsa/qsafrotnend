@@ -264,6 +264,8 @@ this.http.get<DepartmentManagerResponse>(`${environment.apiUrl}/users/gerente/de
     });
   }
 
+  
+
   setupWorkorderFilter(): void {
     this.searchWorkOrderTerm.pipe(
       takeUntil(this.destroy$),
@@ -295,6 +297,7 @@ this.http.get<DepartmentManagerResponse>(`${environment.apiUrl}/users/gerente/de
     const searchValue = (event.target as HTMLInputElement).value;
     this.productSearchTerm.next(searchValue);
   }
+
 
   onSave(): void {
     if (this.addForm.valid) {

@@ -1,0 +1,141 @@
+.dialog-grid {
+    display: grid;
+    gap: 16px; // Espacio entre elementos
+  
+    // Por defecto, cada elemento ocupa una columna (ancho completo)
+    // Los elementos se ajustarán según minmax si hay espacio.
+    // Para forzar dos columnas para elementos específicos, los agruparemos
+    // o les daremos clases.
+    grid-template-columns: 1fr; // Por defecto una columna para el flujo normal
+  
+    @media (min-width: 600px) { // En pantallas más grandes, permite más columnas
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; // Dos columnas iguales
+    gap: 16px;
+    grid-column: 1 / -1; // Asegura que esta fila ocupe todo el ancho del contenedor padre
+  }
+
+  .full-width {
+    grid-column: 1 / -1; /* Hace que el campo ocupe todo el ancho */
+  }
+  
+  // Estilo para el input de búsqueda encima del select si es necesario
+  .product-search-input {
+    margin-bottom: -1.25em; // Ajusta para que no se vea tan separado del select
+    padding: 0 10px;
+    width: calc(100% - 20px); // Ajusta el ancho
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+
+  .file-drop-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    
+    &:hover, &.dragover {
+      background-color: #eef7ff;
+      border-color: #3f51b5;
+    }
+  }
+  
+  .file-drop-icon {
+    margin-bottom: 8px;
+    
+    mat-icon {
+      font-size: 36px;
+      width: 36px;
+      height: 36px;
+      color: #3f51b5;
+    }
+  }
+  
+  .file-drop-message {
+    color: #555;
+  }
+  
+  .file-select-button {
+    color: #3f51b5;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+  
+  .file-input-hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .uploaded-files-list {
+    margin-top: 16px;
+  }
+  
+  .uploaded-file-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 4px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    
+    mat-icon {
+      margin-right: 8px;
+      color: #3f51b5;
+    }
+  }
+
+
+  .selected-files-section, .uploaded-files-section {
+    margin-top: 16px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    
+    h3 {
+      margin-top: 0;
+      font-size: 16px;
+      color: #555;
+    }
+  }
+  
+  .file-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    
+    mat-icon {
+      margin-right: 8px;
+      color: #3f51b5;
+    }
+    
+    span {
+      flex-grow: 1;
+    }
+  }
+  
+  .file-actions {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }

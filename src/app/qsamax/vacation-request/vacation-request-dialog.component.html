@@ -1,0 +1,89 @@
+<h2 mat-dialog-title>Nueva Solicitud de Vacaciones</h2>
+
+<mat-dialog-content [formGroup]="form" class="two-columns">
+
+  <!-- Columna izquierda -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Buscar empleado</mat-label>
+    <input matInput type="text" placeholder="Buscar por código o nombre..." (input)="onEmployeeSearchChange($event)">
+    <mat-icon matSuffix>search</mat-icon>
+
+    <mat-select  (selectionChange)="onEmployeeSelected($event)">
+      <mat-option *ngFor="let emp of filteredEmployees$ | async" [value]="emp.codigo">
+        {{ emp.codigo }} - {{ emp.nombre }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Fecha de ingreso</mat-label>
+    <input matInput formControlName="fecha_ingreso" readonly>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Proceso</mat-label>
+    <input matInput formControlName="proceso" readonly>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Puesto</mat-label>
+    <input matInput formControlName="puesto" readonly>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Años Trabajados</mat-label>
+    <input matInput type="number" formControlName="years_worked" readonly />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Días calculados</mat-label>
+    <input matInput type="number" formControlName="calculated_days" readonly />
+  </mat-form-field>
+
+    <!-- Nuevos campos para ver días -->
+  <mat-form-field>
+    <mat-label>Días pendientes</mat-label>
+    <input matInput type="number" formControlName="pending_days" readonly />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Días actuales</mat-label>
+    <input matInput type="number" formControlName="current_days" readonly />
+  </mat-form-field>
+  
+
+  <mat-form-field>
+    <mat-label>Fecha Inicio</mat-label>
+    <input matInput [matDatepicker]="startPicker" formControlName="vacation_start_date" />
+    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Fecha Fin</mat-label>
+    <input matInput [matDatepicker]="endPicker" formControlName="vacation_end_date" />
+    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+    <mat-datepicker #endPicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-slide-toggle formControlName="half_day_vacation">Medio día</mat-slide-toggle>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-form-field>
+    <mat-label>Horas de Vacación</mat-label>
+    <input matInput type="number" formControlName="vacation_hours" readonly />
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="submit()">Guardar</button>
+  <button mat-raised-button color="primary" (click)="AgregaDiasCalculados()">
+    <mat-icon>beach_access</mat-icon>
+    Calcular días de vacaciones
+  </button>
+</mat-dialog-actions>

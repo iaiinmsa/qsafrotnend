@@ -1,0 +1,35 @@
+
+
+
+
+
+::ng-deep .success-snackbar {
+  background-color: #4caf50 !important;
+  color: white !important;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+.gold-button {
+  background-color: #FFD700; /* Dorado */
+  color: #ffffff;             /* Texto blanco */
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.gold-button mat-icon {
+  color: #ffffff;
+}
+
+
+.yellow-button {
+  background-color: #cdb110; /* Dorado */
+  color: #ffffff;             /* Texto blanco */
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.gold-button mat-icon {
+  color: #ffffff;
+}

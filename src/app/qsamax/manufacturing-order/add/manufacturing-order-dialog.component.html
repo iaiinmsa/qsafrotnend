@@ -1,0 +1,270 @@
+<h2 mat-dialog-title>Nueva Orden de Producción</h2>
+<mat-dialog-content [formGroup]="orderForm">
+  <div class="grid grid-cols-2 gap-4">
+
+     <div class="dialog-grid">
+        
+    <mat-form-field>
+      <mat-label>Orden Producción</mat-label>
+      <input matInput formControlName="productionOrder">
+    </mat-form-field>
+
+    
+   
+      <mat-form-field>
+      <mat-label>Asignado a (Gte planificacion de proyectos)</mat-label>
+      <input matInput formControlName="assignedTo">
+    </mat-form-field>
+
+      </div>
+
+    <!-- Orden de Producción con Autocomplete
+<mat-form-field appearance="outline">
+  <mat-label>Etiqueta</mat-label>
+  <input 
+    type="text" 
+    matInput 
+    placeholder="Buscar OP..." 
+    [matAutocomplete]="auto"
+    (input)="onWorkOrderSearchChange($event)"
+    formControlName="productionOrderLabel" 
+    required
+  >
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onWorkOrderSelected($event)">
+    <mat-option *ngFor="let product of filteredWorkOrdersd$ | async" [value]="product.op">
+      {{ product.op }} — {{ product.descripcion }}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error *ngIf="orderForm.get('productionOrderLabel')?.hasError('required')">
+    Orden de Producción es requerida.
+  </mat-error>
+</mat-form-field>
+
+-->
+
+  
+   <div class="dialog-grid">
+        <mat-form-field>
+      <mat-label>Solicitado por (Gte mercadeo y ventas)</mat-label>
+      <input matInput formControlName="requestedBy">
+    </mat-form-field>
+
+     <mat-form-field>
+    <mat-label>Fecha creacion</mat-label>
+    <input matInput [matDatepicker]="startPicker" formControlName="createDate" />
+    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
+     
+   </div>
+
+
+
+
+      <!-- Cliente con Autocomplete -->
+<mat-form-field appearance="outline">
+  <mat-label>Cliente</mat-label>
+  <input 
+    type="text" 
+    matInput 
+    placeholder="Buscar Cliente..." 
+    [matAutocomplete]="autoCustomer"
+    (input)="onCustomerChange($event)"
+    formControlName="customerCode" 
+    required
+  >
+  <mat-autocomplete  #autoCustomer="matAutocomplete" (optionSelected)="onCustomerSelected($event)">
+    <mat-option *ngFor="let custom of filteredCustomer$ | async" [value]="custom.codigo">
+      {{ custom.codigo }} — {{ custom.nombre }}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error *ngIf="orderForm.get('customerCode')?.hasError('required')">
+    Cliente es requerida.
+  </mat-error>
+</mat-form-field>
+
+
+  
+   <div class="dialog-grid">
+
+       <mat-form-field>
+           <mat-label>Contacto</mat-label>
+           <input matInput formControlName="contactName">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="contactPhone">
+        </mat-form-field>
+        
+    </div>
+        
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="contactEmail">
+    </mat-form-field>
+
+
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Descripción del proyecto</mat-label>
+  <textarea 
+    matInput 
+    formControlName="projectScope" 
+    rows="4" 
+    placeholder="Escribe la descripción aquí...">
+  </textarea>
+</mat-form-field>
+
+
+<mat-form-field appearance="outline" class="w-100">
+  <mat-label>Localizacion</mat-label>
+  <textarea 
+    matInput 
+    formControlName="location" 
+    rows="2" 
+    placeholder="Escribe la descripción aquí...">
+  </textarea>
+</mat-form-field>
+
+
+   <div class="dialog-grid">
+       <mat-form-field>
+           <mat-label>Peso metalico</mat-label>
+           <input matInput type="number" formControlName="metalWeight">
+        </mat-form-field>
+        
+        
+        
+        <mat-form-field appearance="outline" >
+            <mat-label>Unidad de medida</mat-label>
+            <mat-select formControlName="unitofMeasure">
+                <mat-option *ngFor="let unit of units" [value]="unit.codigo">
+                    {{ unit.nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        
+        
+    </div>
+
+
+       <div class="dialog-grid">
+           <mat-form-field>
+               <mat-label>Gran Total</mat-label>
+               <input matInput type="number" formControlName="grandTotal">
+            </mat-form-field>
+            
+            
+            <mat-form-field appearance="outline" >
+                <mat-label>Moneda</mat-label>
+                <mat-select formControlName="currency">
+                    <mat-option *ngFor="let curr of currency" [value]="curr.codigo">
+                        {{ curr.alias }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+        </div>
+            
+   <mat-form-field>
+      <mat-label>Factor de cambio</mat-label>
+      <input matInput type="number" formControlName="paymentFactor">
+    </mat-form-field>
+ 
+
+  <mat-form-field appearance="outline" class="w-100">
+  <mat-label>Forma de pago</mat-label>
+  <textarea 
+    matInput 
+    formControlName="payTerm" 
+    rows="2" 
+    placeholder="Escribe la descripción aquí...">
+  </textarea>
+</mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+  <mat-label>Tiempo de entrega</mat-label>
+  <textarea 
+    matInput 
+    formControlName="deliveryTime" 
+    rows="2" 
+    placeholder="Escribe la descripción aquí...">
+  </textarea>
+</mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+  <mat-label>Observaciones</mat-label>
+  <textarea 
+    matInput 
+    formControlName="observation" 
+    rows="2" 
+    placeholder="Escribe la descripción aquí...">
+  </textarea>
+</mat-form-field>
+
+
+<!-- Sección de subida por categoría -->
+<div *ngFor="let type of fileTypes">
+  <h3>Archivos - {{ type }}</h3>
+  <app-file-drop 
+    [title]="'Arrastra archivos para ' + type" 
+    [type]="type"
+    (filesSelected)="onFilesSelectedb($event)">
+  </app-file-drop>
+</div>
+
+</div> <!-- 👈 cierro aquí el grid de los inputs -->
+
+<hr>
+
+<!-- Lista general de archivos -->
+<!-- Lista general de archivos -->
+<h3>Lista general de archivos seleccionados</h3>
+<div *ngIf="allSelectedFiles.length > 0; else noFiles">
+  <mat-table [dataSource]="allSelectedFiles" class="mat-elevation-z2">
+
+    <!-- Columna Categoría -->
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef>Categoría</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{ item.type }}</mat-cell>
+    </ng-container>
+
+    <!-- Columna Archivo -->
+    <ng-container matColumnDef="file">
+      <mat-header-cell *matHeaderCellDef>Archivo</mat-header-cell>
+      <mat-cell *matCellDef="let item">{{ item.file.name }}</mat-cell>
+    </ng-container>
+
+    <!-- Columna Acción -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Acción</mat-header-cell>
+      <mat-cell *matCellDef="let item">
+        <button mat-icon-button color="warn" 
+          (click)="removeFile(item.type, selectedFilesByType[item.type].indexOf(item.file))">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Header y Rows -->
+    <mat-header-row *matHeaderRowDef="['type','file','actions']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['type','file','actions']"></mat-row>
+  </mat-table>
+</div>
+
+<ng-template #noFiles>
+  <p>No se han seleccionado archivos todavía.</p>
+</ng-template>
+
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="loading || orderForm.invalid"
+  >
+    {{ loading ? 'Guardando...' : 'Guardar' }}
+  </button>
+</mat-dialog-actions>

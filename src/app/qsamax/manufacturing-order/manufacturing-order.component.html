@@ -1,0 +1,147 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Órdenes de Producción</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i> Mercadeo
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Producción</li>
+        <li class="breadcrumb-item position-relative">Órdenes</li>
+    </ol>
+</div>
+
+<mat-card class="daxa-card to-do-list-card mb-25 border-radius bg-white border-none d-block">
+  <mat-card-header>
+    <mat-card-title>
+
+        <button mat-raised-button color="primary" (click)="openCreateDialog()">
+   <mat-icon>add_circle</mat-icon>   Orden de Producción
+</button>
+
+
+        <button mat-stroked-button color="primary" class="ms-2" (click)="exportToExcel()">
+            <mat-icon>file_download</mat-icon> Exportar a Excel
+        </button>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <form class="search-box position-relative">
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput placeholder="Buscar por orden o cliente" class="input-search d-block w-100" (keyup)="applyFilter($event)">
+        </mat-form-field>
+      </form>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="objectives-table">
+
+        <ng-container matColumnDef="idManufacturingOrder">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let order">{{ order.idManufacturingOrder }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="productionOrder">
+          <th mat-header-cell *matHeaderCellDef>Orden Producción</th>
+          <td mat-cell *matCellDef="let order">{{ order.productionOrder }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="customerCode">
+          <th mat-header-cell *matHeaderCellDef>Cliente</th>
+          <td mat-cell *matCellDef="let order">{{ order.customerCode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="projectScope">
+          <th mat-header-cell *matHeaderCellDef>Proyecto</th>
+          <td mat-cell *matCellDef="let order">{{ order.projectScope }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="createDate">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let order">{{ order.createDate | date:'short' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let order">
+            <button mat-icon-button matTooltip="Ver Detalles" (click)="toggleDetail(order)">
+              <mat-icon>expand_more</mat-icon>
+            </button>
+
+             <button mat-stroked-button color="accent" (click)="openupdateDetailDialog(order)">
+          <mat-icon>note_add</mat-icon> Agregar Detalle
+        </button>
+
+           <button mat-stroked-button color="accent" (click)="verPdf(order.idManufacturingOrder)">
+          <mat-icon>picture_as_pdf</mat-icon> Ver pdf
+        </button>
+
+     
+          </td>
+        </ng-container>
+
+      <!-- Fila detalle -->
+<ng-container matColumnDef="expandedDetail">
+  <td mat-cell *matCellDef="let order" [attr.colspan]="displayedColumns.length">
+    <div class="objective-detail-container" 
+    [@detailExpand]="order === selectedOrder ? 'expanded' : 'collapsed'">
+
+     
+   
+    
+      <div *ngIf="order.details?.length">
+        <table *ngIf="order === selectedOrder && order.details?.length"
+         mat-table [dataSource]="order.details" class="detail-table">
+
+          <ng-container matColumnDef="fileName">
+            <th mat-header-cell *matHeaderCellDef>Archivo</th>
+            <td mat-cell *matCellDef="let detail">{{ detail.fileName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Descripción</th>
+            <td mat-cell *matCellDef="let detail">{{ detail.description }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="uploadBy">
+            <th mat-header-cell *matHeaderCellDef>Subido por</th>
+            <td mat-cell *matCellDef="let detail">{{ detail.uploadBy }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="filePath">
+            <th mat-header-cell *matHeaderCellDef>Ruta</th>
+            <td mat-cell *matCellDef="let detail">{{ detail.filePath }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="descargar">
+            <th mat-header-cell *matHeaderCellDef>Descargar</th>
+            <td mat-cell *matCellDef="let detail">
+              <button mat-icon-button matTooltip="Descargar" (click)="downloadFile(detail.filePath)">
+                <mat-icon>download</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsDetail"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsDetail;"></tr>
+        </table>
+      </div>
+    </div>
+  </td>
+</ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="toggleDetail(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="objective-detail-row"></tr>
+      </table>
+
+      <mat-paginator [pageSize]="20" [pageSizeOptions]="[20, 40, 100]" showFirstLastButtons>
+</mat-paginator>
+
+    </div>
+  </mat-card-content>
+</mat-card>

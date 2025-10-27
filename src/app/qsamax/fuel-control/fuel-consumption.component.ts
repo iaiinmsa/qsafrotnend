@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { FuelControlComponent } from './fuel-control.component';
 
+
 @Component({
     standalone: true,
    imports: [

@@ -141,12 +141,24 @@ export class StorageService {
   }
 
 
+   setEmail(email: string): void {
+    this.setItem('email', email);
+  }
+
+  /**
+   * Obtiene el ID del departamento.
+   */
+  getEmail(): string | null {
+    return this.getItem('email');
+  }
+
   /**
    * Limpia los datos de sesión relevantes del usuario.
    */
   clearUserSession(): void {
     this.removeItem('currentUserEmail');
     this.removeItem('userRoles');
+     this.removeItem('departmentName');
     this.removeItem('departmentId'); // Si también quieres limpiar esto al cerrar sesión
     // Añade aquí otras claves que deban limpiarse al cerrar sesión
   }

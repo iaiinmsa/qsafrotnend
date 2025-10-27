@@ -107,6 +107,7 @@
                     </mat-expansion-panel>
 
 
+
                              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -134,7 +135,213 @@
                         </ul>
                     </mat-expansion-panel>
 
-                
+                      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    modeling
+                                    </i>
+                             
+                                <span class="title">
+                                    DYD
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/DYD/planosop" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('DYDPLANOS')"> 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    2d
+                                </i>
+                                    Planos OP
+                                </a>
+                            </li>
+                         
+                        
+                        </ul>
+                    </mat-expansion-panel>
+
+                    
+
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title *ngIf="hasRole('talentohumano')" >
+                                <i class="material-symbols-outlined">
+                                    ad
+                                    </i>
+                             
+                                <span class="title">
+                                    Mercadeo
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/mercadeo/op" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                 *ngIf="hasRole('talentohumano')" > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    factory
+                                </i>
+                                    Orden de produccion
+                                </a>
+                            </li>
+
+                           
+                         
+                        
+                        </ul>
+                    </mat-expansion-panel>
+
+
+                      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title *ngIf="hasRole('talentohumano')" >
+                                <i class="material-symbols-outlined">
+                                    person_play
+                                    </i>
+                             
+                                <span class="title">
+                                    Talento Humano
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/rrhh/Vacaciones" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                 *ngIf="hasRole('talentohumano')" > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    weekend
+                                </i>
+                                    Vacaciones
+                                </a>
+                            </li>
+
+                                  <li class="sidemenu-item">
+                                <a routerLink="/rrhh/Vacationreport" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                               > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    table_chart
+                                </i>
+                                   Reporte Vacaciones
+                                </a>
+                            </li>
+                         
+                        
+                        </ul>
+                    </mat-expansion-panel>
+
+
+                         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    person
+                                </i>
+                                <span class="title">
+                                    Asociados
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                              <li class="sidemenu-item">
+                                <a routerLink="/rrhh/VacacionesAsociados" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                               > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    weekend
+                                </i>
+                                    Vacaciones
+                                </a>
+                            </li>
+                   
+
+                        </ul>
+                    </mat-expansion-panel>
+
+
+                           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    engineering
+                                </i>
+                                <span class="title">
+                                    Supervisores
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                              <li class="sidemenu-item">
+                                <a routerLink="/rrhh/Vacacionessupervisor" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                               > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    weekend
+                                </i>
+                                   Autoriza Vacaciones
+                                </a>
+                            </li>
+                       
+                       
+                        </ul>
+                    </mat-expansion-panel>
+
+                           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    engineering
+                                </i>
+                                <span class="title">
+                                    Gerentes
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                              <li class="sidemenu-item">
+                                <a routerLink="/rrhh/VacacionesAsociados" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                               > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    weekend
+                                </i>
+                                    Autoriza Vacaciones
+                                </a>
+                            </li>
+                       
+                       
+                        </ul>
+                    </mat-expansion-panel>
+
+
+       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    robot_2
+                                    </i>
+                             
+                                <span class="title">
+                                    IA
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/ia/op" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('DYDPLANOS')"> 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    robot_2
+                                </i>
+                                    Prdemes de produccion
+                                </a>
+                            </li>
+                         
+                        
+                        </ul>
+                    </mat-expansion-panel>
+
+
+
+ <!--  
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -169,9 +376,10 @@
                             </li>
                         </ul>
                     </mat-expansion-panel>
-
+-->
+     
               
-              
+              <!--  
 
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
                         <mat-expansion-panel-header>
@@ -223,7 +431,7 @@
                             </li>
                         </ul>
                     </mat-expansion-panel>
-
+-->
                    
                
 

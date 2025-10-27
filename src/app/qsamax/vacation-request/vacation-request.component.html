@@ -1,0 +1,166 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+  <h5 class="mb-0">Solicitudes de Vacaciones</h5>
+  <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+    <li class="breadcrumb-item position-relative">
+      <a routerLink="/" class="d-inline-block position-relative">
+        <i class="ri-home-8-line"></i> Dashboard
+      </a>
+    </li>
+    <li class="breadcrumb-item position-relative">Vacaciones</li>
+    <li class="breadcrumb-item position-relative">Solicitudes</li>
+  </ol>
+</div>
+
+<mat-card class="daxa-card mb-25 bg-white border-none d-block">
+  <mat-card-header>
+    <mat-card-title>
+
+        <button mat-stroked-button color="primary" (click)="openVacationDialog()">
+  <mat-icon>add_circle_outline</mat-icon> Nueva Solicitud
+        </button>
+
+      <button mat-stroked-button color="primary" (click)="exportToExcel()">
+        <mat-icon>file_download</mat-icon> Exportar a Excel
+      </button>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <form class="search-box position-relative">
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            placeholder="Buscar..."
+            (keyup)="applyFilter($event)"
+            class="input-search d-block w-100"
+          />
+        </mat-form-field>
+      </form>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div *ngIf="isLoading" class="alert alert-info">Cargando datos...</div>
+    <div *ngIf="!isLoading" class="table-responsive">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="request_date">
+          <th mat-header-cell *matHeaderCellDef> Fecha Solicitud </th>
+          <td mat-cell *matCellDef="let row">{{ row.request_date | date:'shortDate' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="employee_code">
+          <th mat-header-cell *matHeaderCellDef> Código Empleado </th>
+          <td mat-cell *matCellDef="let row">{{ row.employee_code }}</td>
+        </ng-container>
+
+              <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> nombre  </th>
+          <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="years_worked">
+          <th mat-header-cell *matHeaderCellDef> Años </th>
+          <td mat-cell *matCellDef="let row">{{ row.years_worked }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="vacation_start_date">
+          <th mat-header-cell *matHeaderCellDef> Inicio </th>
+          <td mat-cell *matCellDef="let row">{{ row.vacation_start_date | date:'shortDate' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="vacation_end_date">
+          <th mat-header-cell *matHeaderCellDef> Fin </th>
+          <td mat-cell *matCellDef="let row">{{ row.vacation_end_date | date:'shortDate' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="vacation_hours">
+          <th mat-header-cell *matHeaderCellDef> Dias solicitado </th>
+          <td mat-cell *matCellDef="let row">{{ row.vacation_hours }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+        </ng-container>
+
+         <ng-container matColumnDef="pending_days">
+          <th mat-header-cell *matHeaderCellDef> Dias pendientes </th>
+          <td mat-cell *matCellDef="let row">{{ row.pending_days }}</td>
+        </ng-container>
+
+          <ng-container matColumnDef="current_days">
+          <th mat-header-cell *matHeaderCellDef> Dias Utilizados </th>
+          <td mat-cell *matCellDef="let row">{{ row.current_days }}</td>
+        </ng-container>
+
+          <ng-container matColumnDef="calculated_days">
+          <th mat-header-cell *matHeaderCellDef> Dias Calculados </th>
+          <td mat-cell *matCellDef="let row">{{ row.calculated_days }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+  <th mat-header-cell *matHeaderCellDef> Acciones </th>
+  <td mat-cell *matCellDef="let row">
+    <!-- Botón de aprobar si calculated_days > 0 -->
+    <button
+      mat-button
+      color="primary"
+      *ngIf="row.calculated_days > 0"
+      (click)="aprobarSolicitud(row)"
+    >
+      <mat-icon>check_circle</mat-icon> Aprobar
+    </button>
+
+    <!-- Botón de autorizar si calculated_days == 0 -->
+    <button
+      mat-button
+      color="accent"
+      *ngIf="row.calculated_days < 1"
+      (click)="autorizarSolicitud(row)"
+    >
+      <mat-icon>verified_user</mat-icon> Autorizar
+    </button>
+
+
+     <button
+      mat-button
+      class="gold-button"
+      *ngIf="row.calculated_days < 1"
+      (click)="aprobarSolicitud(row)"
+    >
+      <mat-icon>check_circle</mat-icon> Aprobacion especial
+    </button>
+
+    <button
+  mat-button
+  class="yellow-button"
+  (click)="openEditVacationDialog(row)"
+>
+  <mat-icon>edit</mat-icon> Editar Periodo
+</button>
+
+    
+  </td>
+</ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="8">No hay datos</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSize]="10"></mat-paginator>
+    </div>
+  </mat-card-content>
+
+
+  
+</mat-card>

@@ -11,3 +11,10 @@ export interface Product {
     descripcion: string;
   }
   
+
+    export interface customer {
+    codigo: string;
+    fantasyname: string;
+    nombre: string;
+    rtn: string;
+  }

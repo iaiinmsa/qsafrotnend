@@ -1,0 +1,37 @@
+<div class="consulta-container">
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Pregunta</mat-label>
+    <input matInput [(ngModel)]="question" placeholder="Ej: Muestrame las órdenes por cliente" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Tabla</mat-label>
+    <input matInput [(ngModel)]="table" placeholder="Ej: workorder" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="enviarConsulta()">Consultar</button>
+
+  <div *ngIf="sql">
+    <h3>Consulta generada (SQL):</h3>
+    <pre>{{ sql }}</pre>
+  </div>
+
+  <div *ngIf="error" class="error">
+    ❌ {{ error }}
+  </div>
+
+  <div *ngIf="result?.length">
+    <h3>Resultados:</h3>
+    <table mat-table [dataSource]="result" class="mat-elevation-z8">
+
+      <!-- Columnas dinámicas -->
+      <ng-container *ngFor="let col of columns" [matColumnDef]="col">
+        <th mat-header-cell *matHeaderCellDef>{{ col }}</th>
+        <td mat-cell *matCellDef="let row">{{ row[col] }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    </table>
+  </div>
+</div>

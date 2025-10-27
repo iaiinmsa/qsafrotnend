@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Editar Vacaciones</h2>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field class="w-100">
+      <mat-label>Días Calculados</mat-label>
+      <input matInput type="number" formControlName="days">
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <mat-label>Periodo</mat-label>
+      <input matInput formControlName="vacationPeriod" placeholder="Ej. 2025">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>

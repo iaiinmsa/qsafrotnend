@@ -1,0 +1,42 @@
+<div class="file-drop-area"
+     (dragover)="onDragOver($event)"
+     (drop)="onDrop($event)">
+
+  <div class="file-drop-icon">
+    <mat-icon>cloud_upload</mat-icon>
+  </div>
+
+  <div class="file-drop-message">
+    <b>{{title}}</b> 
+    <span class="file-select-button"> selecciona archivos</span>
+  </div>
+
+  <input
+    type="file"
+    class="file-input-hidden"
+    (change)="onFilesSelected($event)"
+    multiple
+  />
+
+  <!-- Lista de seleccionados -->
+  <div *ngIf="selectedFiles.length">
+    <h4>Archivos seleccionados</h4>
+    <div *ngFor="let file of selectedFiles; let i = index" class="file-item">
+      <mat-icon>insert_drive_file</mat-icon>
+      <span>{{ file.name }}</span>
+      <button mat-icon-button (click)="removeSelectedFile(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    <button mat-raised-button color="primary" (click)="uploadAll()">Subir todos</button>
+  </div>
+
+  <!-- Lista de subidos -->
+  <div *ngIf="uploadedFiles.length">
+    <h4>Archivos subidos</h4>
+    <div *ngFor="let file of uploadedFiles" class="file-item">
+      <mat-icon>check_circle</mat-icon>
+      <span>{{ file.name }}</span>
+    </div>
+  </div>
+</div>

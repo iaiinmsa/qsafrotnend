@@ -1,0 +1,106 @@
+<h2 mat-dialog-title>Agregar adjuntos a la orden de produccion</h2>
+<mat-dialog-content [formGroup]="orderForm">
+  <div class="grid grid-cols-2 gap-4">
+
+     <div class="dialog-grid">
+        
+    <mat-form-field>
+      <mat-label>Orden Producción</mat-label>
+      <input matInput formControlName="productionOrder" >
+    </mat-form-field>
+
+    
+   
+      </div>
+
+   
+
+  
+
+
+
+  <mat-form-field appearance="outline" class="w-100">
+  <mat-label>Observaciones</mat-label>
+  <textarea 
+    matInput 
+    formControlName="observation" 
+    rows="2" 
+    placeholder="Escribe la descripción aquí...">
+  </textarea>
+</mat-form-field>
+
+
+
+
+
+
+  
+   <!-- Área de drag & drop estilizada -->
+   <div class="file-drop-area" 
+   (dragover)="onDragOver($event)" 
+   (dragleave)="onDragLeave($event)" 
+   (drop)="onDrop($event)">
+
+<div class="file-drop-icon">
+  <mat-icon>cloud_upload</mat-icon>
+</div>
+
+<div class="file-drop-message">
+  Arrastra archivos aquí o
+  <span class="file-select-button">selecciona archivos</span>
+</div>
+
+<!-- Input real (oculto visualmente pero funcional) -->
+<input
+  #fileInput
+  type="file"
+  class="file-input-hidden"
+  (change)="onFilesSelected($event)"
+  multiple
+/>
+
+<!-- Lista de archivos seleccionados pero aún no subidos -->
+<div *ngIf="selectedFiles?.length" class="selected-files-section">
+  <h3>Archivos seleccionados</h3>
+  <div *ngFor="let file of selectedFiles; let i = index" class="file-item">
+    <mat-icon>insert_drive_file</mat-icon>
+    <span>{{ file.name }}</span>
+    <button mat-icon-button (click)="removeSelectedFile(i)" title="Eliminar">
+      <mat-icon>delete</mat-icon>
+    </button>
+  
+  </div>
+  <div class="file-actions">
+    <button mat-button color="warn" (click)="clearSelectedFiles()">Limpiar selección</button>
+    <button mat-raised-button color="primary" >
+      Subir todos los archivos
+    </button>
+  </div>
+</div>
+
+
+<!-- Lista de archivos ya subidos -->
+<div *ngIf="uploadedFiles?.length" class="uploaded-files-section">
+  <h3>Archivos subidos</h3>
+  <div *ngFor="let file of uploadedFiles; let i = index" class="file-item">
+    <mat-icon>check_circle</mat-icon>
+    <span>{{ file.fileName }}</span>
+    <button mat-icon-button (click)="removeUploadedFile(i)" title="Eliminar">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+ 
+</div>
+
+
+   </div>
+</mat-dialog-content>
+
+
+<mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="orderForm.invalid || uploading">
+    Guardar
+  </button>
+</mat-dialog-actions>
