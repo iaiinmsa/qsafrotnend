@@ -27,3 +27,22 @@
   line-height: 1.4;
 }
 
+.date-filter-container {
+  padding: 15px 0;
+  
+  .filter-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+
+    mat-form-field {
+      width: 200px;
+    }
+
+    button {
+      height: 52px; // Alineado con el alto de los inputs
+      margin-bottom: 20px;
+    }
+  }
+}

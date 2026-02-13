@@ -208,6 +208,9 @@ import { VacationAssociatesComponent } from './qsamax/vacation-request/associate
 import { VacationSupervisorComponent } from './qsamax/vacation-request/supervisor/vaction-supervisor.component';
 import { VacationReportComponent } from './qsamax/vacation-request/vacation-report/vacation-report.component';
 import { ManufacturingOrderComponent } from './qsamax/manufacturing-order/manufacturing-order.component';
+import { ManufacturingOrdermktComponent } from './qsamax/manufacturing-order/marketing/show/manufacturing-ordermkt.component';
+import { VacationReportPayComponent } from './qsamax/vacation-request/vacation-report-pay/vacation-report-pay.component';
+import { WorkCardComponent } from './qsamax/work-card/work-card.component';
 
 
 export const routes: Routes = [
@@ -254,7 +257,8 @@ export const routes: Routes = [
         component: EcommercePageComponent,
         children: [
             
-            {path: 'planosop', component: PlanListComponent}
+            {path: 'planosop', component: PlanListComponent},
+            {path: 'op', component: ManufacturingOrdermktComponent}
        
 
          
@@ -280,6 +284,8 @@ export const routes: Routes = [
             {path: 'op', component: ManufacturingOrderComponent}
        
 
+            
+
          
         ]
     },
@@ -295,7 +301,12 @@ export const routes: Routes = [
             {path: 'VacacionesAsociados', component: VacationAssociatesComponent},
              {path: 'Vacacionessupervisor', component: VacationSupervisorComponent},
              {path: 'Vacationreport', component: VacationReportComponent},
+             {path: 'Vacationreportpays', component: VacationReportPayComponent},
+             {path: 'workcard', component: WorkCardComponent},
        
+       
+
+             
 
          
         ]

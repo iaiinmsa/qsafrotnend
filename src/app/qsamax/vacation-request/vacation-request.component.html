@@ -70,12 +70,12 @@
 
         <ng-container matColumnDef="vacation_start_date">
           <th mat-header-cell *matHeaderCellDef> Inicio </th>
-          <td mat-cell *matCellDef="let row">{{ row.vacation_start_date | date:'shortDate' }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.vacation_start_date | date:'dd/MM/yyyy':'UTC' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="vacation_end_date">
           <th mat-header-cell *matHeaderCellDef> Fin </th>
-          <td mat-cell *matCellDef="let row">{{ row.vacation_end_date | date:'shortDate' }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.vacation_end_date | date:'dd/MM/yyyy':'UTC' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="vacation_hours">

@@ -149,12 +149,12 @@
                         </mat-expansion-panel-header>
                         <ul class="sidebar-sub-menu">
                             <li class="sidemenu-item">
-                                <a routerLink="/DYD/planosop" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                <a routerLink="/DYD/op" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
                                 *ngIf="hasRole('DYDPLANOS')"> 
                                 <i class="material-symbols-outlined"> <!-- Ícono agregado -->
                                     2d
                                 </i>
-                                    Planos OP
+                                    Orden de produccion
                                 </a>
                             </li>
                          
@@ -227,7 +227,27 @@
                                 </a>
                             </li>
                          
+                                 <li class="sidemenu-item">
+                                <a routerLink="/rrhh/Vacationreportpays" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                               > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    table_chart
+                                </i>
+                                   Reporte Vacaciones pagos
+                                </a>
+                            </li>
                         
+
+                                 <li class="sidemenu-item">
+                                <a routerLink="/rrhh/workcard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                               > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    table_chart
+                                </i>
+                                   Carnets
+                                </a>
+                            </li>
+
                         </ul>
                     </mat-expansion-panel>
 

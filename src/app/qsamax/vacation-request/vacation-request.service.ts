@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -62,6 +62,14 @@ updateDaysVacationAvailable(id: number, days: number, vacationPeriod: string) {
   });
 }
 
+getApprovedReportByRange(start: string, end: string): Observable<any[]> {
+  const url = `${environment.apiUrlqsa}/vacation-requests/report/approved-range`;
+  const params = new HttpParams()
+    .set('start', start)
+    .set('end', end);
+
+  return this.http.get<any[]>(url, { params });
+}
 
   
 }
