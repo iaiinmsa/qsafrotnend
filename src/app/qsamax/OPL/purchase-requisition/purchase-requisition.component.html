@@ -1,0 +1,164 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+  <h5 class="mb-0">Solicitud de pedido</h5>
+  <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+    <li class="breadcrumb-item position-relative">
+      <a routerLink="/" class="d-inline-block position-relative">
+        <i class="ri-home-8-line"></i> Compras
+      </a>
+    </li>
+    <li class="breadcrumb-item position-relative">OPL</li>
+    <li class="breadcrumb-item position-relative">Solicitud de pedido</li>
+  </ol>
+</div>
+
+<!-- ✅ Usamos permisoConfirmado para evitar que el mensaje aparezca por error al cargar -->
+<div *ngIf="permisoConfirmado">
+
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 15px; padding-right: 15px;">
+  <mat-slide-toggle 
+    color="primary" 
+    [(ngModel)]="verHistorial" 
+    (change)="cargarDatos()">
+    {{ verHistorial ? 'Viendo Historial (Procesadas)' : 'Viendo Pendientes' }}
+  </mat-slide-toggle>
+</div>
+
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="mb-3" (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Uso Específico" *ngIf="tienePermisoUsoEspecifico"></mat-tab>
+    <mat-tab label="Revisión (Jefe)" *ngIf="tienePermisoJefe"></mat-tab>
+    <mat-tab label="Por Autorizar" *ngIf="tienePermisoAutorizar"></mat-tab>
+    <mat-tab label="Por Aprobar" *ngIf="tienePermisoAprobar"></mat-tab>
+  </mat-tab-group>
+</div>
+
+
+
+<!-- ✅ Mensaje si no tiene ningún rol -->
+<div *ngIf="!permisoConfirmado" class="p-4 text-center">
+  <mat-icon>lock</mat-icon>
+  <p>No tienes permisos para acceder a esta sección.</p>
+</div>
+
+<mat-card class="daxa-card mb-25 border-radius bg-white border-none d-block">
+  <mat-card-header>
+    <mat-card-title>
+        <button mat-stroked-button color="primary" (click)="cargarDatos()">
+            <mat-icon>refresh</mat-icon> Actualizar
+        </button>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <form class="search-box position-relative">
+        <mat-form-field class="w-100">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput placeholder="Buscar por número o comentario" (keyup)="applyFilter($event)">
+        </mat-form-field>
+      </form>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="objectives-table">
+
+        <!-- Número Columna -->
+        <ng-container matColumnDef="numero">
+          <th mat-header-cell *matHeaderCellDef># Solicitud</th>
+          <td mat-cell *matCellDef="let row"><strong>{{ row.numero }}</strong></td>
+        </ng-container>
+
+        <!-- Estado Columna -->
+      <ng-container matColumnDef="estado">
+  <th mat-header-cell *matHeaderCellDef>Estado</th>
+  <td mat-cell *matCellDef="let row">
+     {{ row.estado }}
+  </td>
+</ng-container>
+
+        <!-- Usuario Columna -->
+        <ng-container matColumnDef="usuario">
+          <th mat-header-cell *matHeaderCellDef>Solicitante</th>
+          <td mat-cell *matCellDef="let row">{{ row.usuario }}</td>
+        </ng-container>
+
+        <!-- Fecha Columna -->
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let row">{{ row.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+        </ng-container>
+
+        <!-- Comentario Columna -->
+        <ng-container matColumnDef="comentario">
+          <th mat-header-cell *matHeaderCellDef>Comentario</th>
+          <td mat-cell *matCellDef="let row">{{ row.comentario }}</td>
+        </ng-container>
+
+        <!-- Acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="toggleDetail(row); $event.stopPropagation()" matTooltip="Ver detalles">
+              <mat-icon>{{ selectedRequest === row ? 'expand_less' : 'expand_more' }}</mat-icon>
+            </button>
+
+            <!-- Botón Aprobar -->
+            <button mat-icon-button color="primary" (click)="confirmarAccion(row, 'aprobar'); $event.stopPropagation()" matTooltip="Aprobar Solicitud">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+
+            <!-- Botón Detener / Comentar -->
+            <button mat-icon-button color="warn" (click)="confirmarAccion(row, 'detener'); $event.stopPropagation()" matTooltip="Detener / Agregar Comentario">
+              <mat-icon>block</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Fila de Detalle Expandible -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length" class="detail-td">
+            <div class="objective-detail-container" 
+                 [@detailExpand]="row === selectedRequest ? 'expanded' : 'collapsed'">
+              
+              <div class="p-3 bg-light" *ngIf="row.detalles?.length">
+                <h6 class="mb-3">Detalle de Artículos:</h6>
+                <table mat-table [dataSource]="row.detalles" class="detail-table w-100 shadow-none">
+                  
+                  <ng-container matColumnDef="articulo">
+                    <th mat-header-cell *matHeaderCellDef>Código</th>
+                    <td mat-cell *matCellDef="let d">{{ d.articulo }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef>Descripción</th>
+                    <td mat-cell *matCellDef="let d">{{ d.descripcion }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell *matHeaderCellDef>Cant.</th>
+                    <td mat-cell *matCellDef="let d">{{ d.cantidad }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="unidad">
+                    <th mat-header-cell *matHeaderCellDef>Unidad</th>
+                    <td mat-cell *matCellDef="let d">{{ d.unidad }}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsDetail"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsDetail;"></tr>
+                </table>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+            class="element-row" 
+            [class.expanded-row]="selectedRequest === row"
+            (click)="toggleDetail(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+      </table>
+
+      <mat-paginator [pageSize]="20" [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,3 +1,28 @@
+
+/* sidebar.component.css */
+.logo-container {
+  display: flex;
+  align-items: center; /* Centra verticalmente logo, texto e icono */
+  gap: 10px; /* Espaciado entre elementos */
+}
+
+.logo-iargo {
+  /* Controla el ancho máximo. Ajusta este valor (30px a 50px)
+     según lo pequeño que lo quieras en relación al texto. */
+  max-width: 40px; 
+  height: auto; /* Mantiene la proporción */
+  display: block;
+}
+
+.logo-text {
+  /* Ajusta el tamaño del texto para que coincida con el logo */
+  font-size: 1.2rem;
+  color: #333; /* O el color que prefieras */
+}
+
+
+
+
 ::ng-deep {
     .sidebar-area {
         --mat-expansion-container-text-line-height: 1.2rem;

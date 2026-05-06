@@ -18,12 +18,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialog } from '@angular/material/dialog';
-
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { environment } from '../../../environments/environment';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DigitalEmployeeRecordsComponent } from './employee/digital-employee-records.component';
+
 
 
 @Component({
@@ -45,7 +46,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   MatNativeDateModule,
   MatFormFieldModule ,
   MatInputModule ,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatDialogModule
         ],
 
   templateUrl: './work-card.component.html',
@@ -163,5 +165,13 @@ generarCarnet(codigo: string) {
     }
   });
 }
+
+  openDigitalRecords(row: any): void {
+    this.dialog.open(DigitalEmployeeRecordsComponent, {
+      width: '900px',
+      data: row,
+      autoFocus: false
+    });
+  }
 
 }

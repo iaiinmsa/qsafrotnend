@@ -211,6 +211,8 @@ import { ManufacturingOrderComponent } from './qsamax/manufacturing-order/manufa
 import { ManufacturingOrdermktComponent } from './qsamax/manufacturing-order/marketing/show/manufacturing-ordermkt.component';
 import { VacationReportPayComponent } from './qsamax/vacation-request/vacation-report-pay/vacation-report-pay.component';
 import { WorkCardComponent } from './qsamax/work-card/work-card.component';
+import { ExternalHistoryItemComponent } from './qsamax/warehouse/externalhistoryitem/externalhistoryitem.component';
+import { PurchaseRequisitionComponent } from './qsamax/OPL/purchase-requisition/purchase-requisition.component';
 
 
 export const routes: Routes = [
@@ -245,12 +247,29 @@ export const routes: Routes = [
         component: EcommercePageComponent,
         children: [
             
-            {path: 'fuelcontrol', component: FuelConsumptionComponent}
+            {path: 'fuelcontrol', component: FuelConsumptionComponent},
+            {path: 'externalhistoryitem', component: ExternalHistoryItemComponent}
+
+            
        
          
         ]
     },
 
+
+     {
+        path: 'OPL',
+        component: EcommercePageComponent,
+        children: [
+            
+            {path: 'SolicitudDePedido', component: PurchaseRequisitionComponent},
+           
+
+            
+       
+         
+        ]
+    },
     
      {
         path: 'DYD',

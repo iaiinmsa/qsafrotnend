@@ -8,10 +8,19 @@
     [class.card-borderd-theme]="themeService.isCardBorder()"
     [class.rtl-enabled]="themeService.isRTLEnabled()"
 >
+
+<div class="logo-container">
+  <img src="/lgiargo.svg" alt="Logo IARGO" class="logo-iargo">
+  <span class="logo-text">IARGO</span>
+  <i class="material-symbols-outlined menu-icon">menu</i>
+</div>
+
     <div class="logo bg-white">
         <a routerLink="/" class="d-flex align-items-center">
-            <img src="images/logo-icon.svg" alt="logo-icon">
-            <span class="fw-semibold">QSAMax</span>
+          <img src="/lgiargo.svg" alt="Logo IARGO" width="32">
+         
+
+            <span class="fw-semibold">IARGO</span>
         </a>
     </div>
     <div
@@ -36,7 +45,7 @@
                 
              
                     <span class="sub-title text-body">
-                        PAGES
+                        Menu
                     </span>
                  
 
@@ -130,7 +139,24 @@
                                     Control Combustible
                                 </a>
                             </li>
-                         
+                         <li class="sidemenu-item">
+                            <a routerLink="/OPL/SolicitudDePedido" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link" *ngIf="hasRole('Solipedidoshow')">
+                                <i class="material-symbols-outlined">request_quote</i> <!-- Icono de solicitud -->
+                                Solicitud de pedido
+                            </a> 
+                        </li>
+
+                             <li class="sidemenu-item">
+                                <a routerLink="/OPERACIONES/externalhistoryitem" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('CombustibleControl')"> 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    inventory
+                                </i>
+                                     Historial Articulos bodega externa
+                                </a>
+                            </li>
+
+                            
                         
                         </ul>
                     </mat-expansion-panel>
