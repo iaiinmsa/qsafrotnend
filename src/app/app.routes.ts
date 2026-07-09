@@ -213,6 +213,8 @@ import { VacationReportPayComponent } from './qsamax/vacation-request/vacation-r
 import { WorkCardComponent } from './qsamax/work-card/work-card.component';
 import { ExternalHistoryItemComponent } from './qsamax/warehouse/externalhistoryitem/externalhistoryitem.component';
 import { PurchaseRequisitionComponent } from './qsamax/OPL/purchase-requisition/purchase-requisition.component';
+import { DashboardTiemposComponent } from './qsamax/OPL/purchase-requisition/reports/dashboardtiempos/dashboard-tiempos.component';
+import { DashboardGanttComponent } from './qsamax/OPL/purchase-requisition/reports/dashboard-gantt/dashboard-gantt.component';
 
 
 export const routes: Routes = [
@@ -226,6 +228,14 @@ export const routes: Routes = [
             {path: 'Objectives-goal', component: ObjectiveGoalComponent},
          
         ]
+    },
+
+  
+    {
+        path: 'gth',
+        component: EcommercePageComponent,
+        // Carga diferida de las rutas de GTH
+        loadChildren: () => import('./qsamax/routes/gth.routes').then(m => m.GTH_ROUTES)
     },
 
     {
@@ -256,18 +266,15 @@ export const routes: Routes = [
         ]
     },
 
-
      {
         path: 'OPL',
         component: EcommercePageComponent,
         children: [
             
-            {path: 'SolicitudDePedido', component: PurchaseRequisitionComponent},
-           
-
-            
-       
-         
+             {path: 'SolicitudDePedido', component: PurchaseRequisitionComponent},
+             {path: 'DashboardTiempos', component: DashboardTiemposComponent},
+             {path: 'DashboardGantt', component: DashboardGanttComponent},
+             
         ]
     },
     
@@ -309,8 +316,6 @@ export const routes: Routes = [
         ]
     },
 
-    
-
            {
         path: 'rrhh',
         component: EcommercePageComponent,
@@ -323,11 +328,7 @@ export const routes: Routes = [
              {path: 'Vacationreportpays', component: VacationReportPayComponent},
              {path: 'workcard', component: WorkCardComponent},
        
-       
 
-             
-
-         
         ]
     },
     
@@ -339,7 +340,7 @@ export const routes: Routes = [
         // loadComponent: () => import('./authentication/welcome/welcome.component').then(m => m.WelcomeComponent)
     },
 
-
+/*
     {path: '', component: EcommerceComponent},
     {path: 'crm', component: CrmComponent},
     {path: 'project-management', component: ProjectManagementComponent},
@@ -363,6 +364,7 @@ export const routes: Routes = [
             {path: 'media', component: MediaComponent}
         ]
     },
+
     {
         path: 'email',
         component: EmailComponent,
@@ -498,7 +500,7 @@ export const routes: Routes = [
             {path: 'users-list', component: UsersListComponent},
             {path: 'add-user', component: AddUserComponent},
         ]
-    },
+    },*/
     {
         path: 'profile',
         component: ProfilePageComponent,
@@ -572,6 +574,9 @@ export const routes: Routes = [
             {path: 'data-table', component: DataTableComponent},
         ]
     },
+
+
+    /*
     {
         path: 'ui-kit',
         component: UiElementsComponent,
@@ -622,7 +627,8 @@ export const routes: Routes = [
             {path: 'videos', component: VideosComponent},
             {path: 'utilities', component: UtilitiesComponent},
         ]
-    },
+    },*/
+    
     {
         path: 'forms',
         component: FormsComponent,

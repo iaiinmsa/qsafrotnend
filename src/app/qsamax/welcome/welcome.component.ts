@@ -18,7 +18,7 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.userEmail = localStorage.getItem('currentUserEmail');
+      this.userEmail = localStorage.getItem('name');
     }
   }
 }

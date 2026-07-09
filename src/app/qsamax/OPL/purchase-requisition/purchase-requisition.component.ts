@@ -160,7 +160,7 @@ const vistaActual =  this.vistaActual; // 'uso_especifico';
     const empleadoID = 'RFG';
 
     // Hacemos la petición GET (Asegúrate de que la ruta coincida con tu backend, ej: apiUrl + '/bandeja')
-    this.requisitionService.getBandejaTareas(vistaActual, emailSesion, empleadoID).subscribe({
+    this.requisitionService.getBandejaTareas(vistaActual, emailSesion, empleadoID, this.verHistorial ).subscribe({
       next: (data) => {
         this.dataSource.data = data;
         console.log('Datos recibidos:', data);

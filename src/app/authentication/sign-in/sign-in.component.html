@@ -9,47 +9,47 @@
             >
                 <div class="title text-center">
                     <h3>
-                        Sign In
+                        Inicia sesión en tu cuenta
                     </h3>
                     <p class="text-black">
-                        Don’t have an account yet? <a routerLink="/authentication/sign-up" class="text-daxa">Sign Up</a>
+                        ¿No tienes una cuenta? <a  class="text-daxa">Solcita una</a>
                     </p>
                 </div>
                 <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label class="main-label d-block lh-1 text-black">
-                            Email Address
+                            Correo 
                         </label>
                         <mat-form-field class="w-100" appearance="outline">
                             <mat-label>
-                                Enter email address
+                                Ingrese correo 
                             </mat-label>
                             <input matInput type="email" id="email" formControlName="email">
                             <mat-error *ngIf="authForm.get('email')?.hasError('required') && authForm.get('email')?.touched">
-                                Email is required.
+                                Este campo es obligatorio.
                             </mat-error>
                             <mat-error *ngIf="authForm.get('email')?.hasError('email') && authForm.get('email')?.touched">
-                                Please enter a valid email address.
+                                Por favor ingrrese un correo valido.
                             </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="form-group">
                         <label class="main-label d-block lh-1 text-black">
-                            Your Password
+                            Contraseña 
                         </label>
                         <mat-form-field class="w-100" appearance="outline">
                             <mat-label>
-                                Enter your password
+                                Ingrese su Contraseña 
                             </mat-label>
                             <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password">
                             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
                                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                             </button>
                             <mat-error *ngIf="authForm.get('password')?.hasError('required') && authForm.get('password')?.touched">
-                                Password is required.
+                                Este campo es obligatorio.
                             </mat-error>
                             <mat-error *ngIf="authForm.get('password')?.hasError('minlength') && authForm.get('password')?.touched">
-                                Password must be at least 8 characters long. 
+                                La contraseña debe tener al menos 8 caracteres.
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -61,10 +61,15 @@
 
                     <div class="info d-flex justify-content-between align-items-center">
                         <mat-checkbox formControlName="rememberMe">
-                            Remember me
+                            Recordarme
                         </mat-checkbox>
-                        <a routerLink="/authentication/forgot-password" class="d-inline-block text-daxa">
-                            Forgot Password?
+                       <!--  <a 
+                         routerLink="/authentication/forgot-password"     
+                            class="d-inline-block text-daxa">
+                            Olvide contraseña?
+                        </a> --> 
+                         <a      class="d-inline-block text-daxa">
+                            Olvide contraseña?
                         </a>
                     </div>
 
@@ -73,32 +78,36 @@
 
                     
                   
-                    <button mat-raised-button color="primary" class="daxa-button text-white d-block w-100 mt-3" type="submit" [disabled]="isLoading || authForm.invalid">
-                        <span *ngIf="!isLoading">Sign In</span>
-                        <span *ngIf="isLoading">Signing In...</span>
+                    <button mat-raised-button color="primary" class="daxa-button text-white d-block w-100 mt-3" type="submit" [disabled]="isLoading ">
+                        <span *ngIf="!isLoading">Iniciar sesión</span>
+                        <span *ngIf="isLoading">Iniciando sesión...</span>
                     </button>
 
+
+                    <!-- Social Login Buttons
                     <div class="signin-with-socials text-center">
                         <div class="or position-relative">
                             <span class="d-inline-block">
-                                or sign in with
+                                o iniciar sesión con
                             </span>
                         </div>
                         <div class="socials">
-                            <button mat-icon-button type="button" class="facebook" aria-label="Sign in with Facebook">
+                            <button mat-icon-button type="button" class="facebook" aria-label="Iniciar sesión con Facebook">
                                 <i class="ri-facebook-fill"></i>
                             </button>
-                            <button mat-icon-button type="button" class="twitter" aria-label="Sign in with Twitter">
+                            <button mat-icon-button type="button" class="twitter" aria-label="Iniciar sesión con Twitter">
                                 <i class="ri-twitter-x-fill"></i>
                             </button>
-                            <button mat-icon-button type="button" class="google" aria-label="Sign in with Google">
+                            <button mat-icon-button type="button" class="google" aria-label="Iniciar sesión con Google">
                                 <i class="ri-google-fill"></i>
                             </button>
-                            <button mat-icon-button type="button" class="linkedin" aria-label="Sign in with LinkedIn">
+                            <button mat-icon-button type="button" class="linkedin" aria-label="Iniciar sesión con LinkedIn">
                                 <i class="ri-linkedin-fill"></i>
                             </button>
                         </div>
                     </div>
+ -->   
+
                 </form>
             </div>
         </div>

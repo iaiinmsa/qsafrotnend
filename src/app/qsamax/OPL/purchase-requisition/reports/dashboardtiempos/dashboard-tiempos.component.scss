@@ -1,0 +1,139 @@
+/* Contenedor principal de la tabla */
+::ng-deep .modern-table-container {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid #f3f4f6 !important;
+  margin-top: 2rem !important;
+  overflow: hidden !important;
+}
+
+/* Forzar estilos de la tabla */
+::ng-deep .modern-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  text-align: left !important;
+}
+
+::ng-deep .modern-table th {
+  background-color: #f9fafb !important;
+  color: #4b5563 !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 1rem 1.5rem !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+::ng-deep .modern-table td {
+  padding: 1rem 1.5rem !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid #f3f4f6 !important;
+  color: #374151 !important;
+  font-size: 0.875rem !important;
+}
+
+::ng-deep .modern-table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+
+/* Textos específicos */
+.req-id {
+  font-weight: 700;
+  color: #4f46e5;
+}
+
+.depto-name {
+  font-weight: 500;
+}
+
+/* Celda del usuario con Avatar */
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.user-name {
+  font-weight: 500;
+}
+
+/* Badges (Etiquetas) de Tiempos */
+.time-badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Colores para hacer match con ApexCharts */
+.badge-blue { background-color: #e0f2fe; color: #0284c7; }
+.badge-red { background-color: #ffe4e6; color: #e11d48; }
+.badge-yellow { background-color: #fef9c3; color: #ca8a04; }
+.badge-green { background-color: #d1fae5; color: #059669; }
+.badge-total { background-color: #1e293b; color: #f8fafc; } /* Oscuro para resaltar el total */
+
+/* Utilidades */
+.text-center { text-align: center; }
+.empty-state { padding: 3rem !important; color: #9ca3af; font-style: italic; }
+.custom-divider { border-top: 2px dashed #e5e7eb; margin: 3rem 0; opacity: 0.5; }
+
+
+
+.header-flex {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  flex-wrap: wrap; /* Por si la pantalla es muy pequeña (móviles) */
+  gap: 1rem;
+}
+
+/* El botón moderno de Excel */
+.btn-modern-excel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #10b981; /* Un verde moderno y vibrante */
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+/* Efecto al pasar el mouse */
+.btn-modern-excel:hover {
+  background-color: #f0fdf4; /* Fondo verde ultra claro */
+  border-color: #10b981;
+  color: #059669; /* Verde un poco más oscuro */
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15);
+  transform: translateY(-1px); /* Pequeña animación de salto */
+}
+
+/* Efecto al hacer clic */
+.btn-modern-excel:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

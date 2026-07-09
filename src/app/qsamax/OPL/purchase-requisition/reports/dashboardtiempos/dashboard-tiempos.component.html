@@ -1,0 +1,113 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+  <h5 class="mb-0">Dashboard Tiempos</h5>
+  <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+    <li class="breadcrumb-item position-relative">
+      <a routerLink="/" class="d-inline-block position-relative">
+        <i class="ri-home-8-line"></i> Compras
+      </a>
+    </li>
+    <li class="breadcrumb-item position-relative">OPL</li>
+    <li class="breadcrumb-item position-relative">Dashboard Tiempos</li>
+  </ol>
+</div>
+
+
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Análisis de Cuellos de Botella (Compras)</h4>
+    <p class="text-muted">Horas promedio que pasa un requerimiento en cada fase.</p>
+    
+    <div *ngIf="cargando">Cargando reporte de eficiencia...</div>
+    
+    <!-- Renderizamos el gráfico solo cuando las opciones ya estén calculadas -->
+    <apx-chart *ngIf=" isBrowser && !cargando"
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [colors]="chartOptions.colors"
+      [legend]="chartOptions.legend"
+      [plotOptions]="chartOptions.plotOptions"
+      [fill]="chartOptions.fill">
+    </apx-chart>
+
+
+    <hr class="my-5"> <!-- Una línea separadora -->
+<hr class="custom-divider">
+
+<div class="modern-table-container" *ngIf="isBrowser && !cargando">
+  <div class="table-header header-flex ">
+    <h5 class="table-title">Detalle de Tiempos por Solicitud</h5>
+    <p class="table-subtitle">Desglose de horas por cada etapa del proceso</p>
+  </div>
+
+ <button class="btn-modern-excel" (click)="exportarAExcel()" title="Descargar datos en Excel">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+        <path d="M2.85858 2.87756L15.4293 1.08175C15.7027 1.0427 15.9559 1.23265 15.995 1.50601C15.9983 1.52943 16 1.55306 16 1.57672V22.4237C16 22.6999 15.7761 22.9237 15.5 22.9237C15.4763 22.9237 15.4527 22.922 15.4293 22.9187L2.85858 21.1229C2.36593 21.0525 2 20.6306 2 20.1329V3.86751C2 3.36986 2.36593 2.94794 2.85858 2.87756ZM17 3V5H20V7H17V9H20V11H17V13H20V15H17V17H20V19H17V21H22V3H17ZM10.6043 14.1561L8.27015 11.4589L10.6125 8.8436L8.52834 8.8436L6.8524 10.7412L6.75713 10.7412L5.2759 8.8436L3.15383 8.8436L5.51862 11.4883L3.10098 14.1561L5.23468 14.1561L6.96962 12.1643L7.05068 12.1643L8.60155 14.1561L10.6043 14.1561Z" fill="currentColor"></path>
+      </svg>
+      <span>Exportar CSV</span>
+    </button>
+
+  <div class="table-responsive">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th># Req.</th>
+          <th>Departamento</th>
+          <th>Solicitante</th>
+          <th class="text-center">Rev. Jefe</th>
+          <th class="text-center">Rev. uso</th>
+          <th class="text-center">Autorización</th>
+          <th class="text-center">Aprobación Final</th>
+          <th class="text-center">Total Horas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let req of listaSolicitudes">
+          <td><span class="req-id">#{{ req.ID_Documento }}</span></td>
+          
+          <td><span class="depto-name">{{ req.Proceso || req.Departamento }}</span></td>
+          
+          <!-- Avatar simulado para el solicitante -->
+          <td>
+            <div class="user-cell">
+              <div class="user-avatar">{{ (req.Solicitante || 'S').charAt(0) | uppercase }}</div>
+              <span class="user-name">{{ req.Solicitante || 'Sin Nombre' }}</span>
+            </div>
+          </td>
+          
+          <!-- Tiempos con Badges de colores que combinan con tu gráfica -->
+          <td class="text-center">
+            <span class="time-badge badge-blue">{{ req.HORAS_REVISION_JEFE || 0 }} h</span>
+          </td>
+          <td class="text-center">
+            <span class="time-badge badge-green">{{ req.Horas_Para_Revision || 0 }} h</span>
+          </td>
+          <td class="text-center">
+            <span class="time-badge badge-red">{{ req.Horas_Para_Autorizacion || 0 }} h</span>
+          </td>
+          <td class="text-center">
+            <span class="time-badge badge-yellow">{{ req.Horas_Para_Aprobacion || 0 }} h</span>
+          </td>
+          
+          <!-- Tiempo total resaltado -->
+          <td class="text-center">
+            <span class="time-badge badge-total">{{ req.Tiempo_Total_Horas || 0 }} h</span>
+          </td>
+        </tr>
+        
+        <!-- Mensaje si no hay datos -->
+        <tr *ngIf="listaSolicitudes.length === 0">
+          <td colspan="7" class="text-center empty-state">
+            No hay solicitudes completadas para mostrar.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    
+
+  </div>
+</div>

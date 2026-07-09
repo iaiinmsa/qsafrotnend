@@ -1,0 +1,212 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+  <h5 class="mb-0">Dashboard Gantt</h5>
+  <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+    <li class="breadcrumb-item position-relative">
+      <a routerLink="/" class="d-inline-block position-relative">
+        <i class="ri-home-8-line"></i> Compras
+      </a>
+    </li>
+    <li class="breadcrumb-item position-relative">OPL</li>
+    <li class="breadcrumb-item position-relative">Dashboard Gantt</li>
+  </ol>
+</div>
+
+
+<div class="card gantt-card">
+  <div class="card-body">
+ 
+    <h4 class="card-title">Diagrama de Gantt — Tiempos por Requisición</h4>
+    <p class="text-muted mb-0">Distribución de horas por fase en cada solicitud de compra.</p>
+ 
+    <div *ngIf="cargando" class="loading-state">
+      <span class="spinner-border spinner-border-sm"></span>
+      Cargando diagrama...
+    </div>
+ 
+    <ng-container *ngIf="!cargando">
+ 
+      <!-- ── KPIs ── -->
+      <div class="kpi-grid mt-4">
+ 
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Promedio total</span>
+            <strong class="kpi-value">{{ promedioTotal }} h</strong>
+            <span class="kpi-sub">por requisición</span>
+          </div>
+        </div>
+ 
+        <div class="kpi-card kpi-red">
+          <div class="kpi-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Críticos (&gt;48 h)</span>
+            <strong class="kpi-value">{{ solicitudesCriticas }}</strong>
+            <span class="kpi-sub">solicitudes</span>
+          </div>
+        </div>
+ 
+        <div class="kpi-card kpi-amber">
+          <div class="kpi-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Más lenta</span>
+            <strong class="kpi-value kpi-value--sm">#{{ solicitudMasLenta?.ID_Documento ?? '—' }}</strong>
+            <span class="kpi-sub">{{ totalHoras(solicitudMasLenta) }} h en total</span>
+          </div>
+        </div>
+ 
+        <div class="kpi-card kpi-purple">
+          <div class="kpi-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+          </div>
+          <div class="kpi-body">
+            <span class="kpi-label">Cuello principal</span>
+            <strong class="kpi-value kpi-value--sm">{{ cuelloPrincipal }}</strong>
+            <span class="kpi-sub">fase más lenta</span>
+          </div>
+        </div>
+ 
+      </div>
+ 
+      <!-- ── Filtros ── -->
+      <div class="gantt-filters">
+        <div class="filter-group">
+          <label class="filter-label" for="filtroDepto">Departamento</label>
+          <select id="filtroDepto" class="filter-select"
+            [(ngModel)]="filtroDepartamento" (ngModelChange)="aplicarFiltros()">
+            <option value="">Todos</option>
+            <option *ngFor="let d of departamentos" [value]="d">{{ d }}</option>
+          </select>
+        </div>
+ 
+        <div class="filter-group">
+          <label class="filter-label" for="sortBy">Ordenar por</label>
+          <select id="sortBy" class="filter-select"
+            [(ngModel)]="ordenamiento" (ngModelChange)="aplicarFiltros()">
+            <option value="total_desc">Total ↓ (mayor primero)</option>
+            <option value="total_asc">Total ↑ (menor primero)</option>
+            <option value="req">No. Requisición</option>
+          </select>
+        </div>
+ 
+        <button class="btn-modern-excel ms-auto" (click)="exportarAExcel()" title="Exportar a Excel">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M2.85858 2.87756L15.4293 1.08175C15.7027 1.0427 15.9559 1.23265 15.995 1.50601C15.9983 1.52943 16 1.55306 16 1.57672V22.4237C16 22.6999 15.7761 22.9237 15.5 22.9237C15.4763 22.9237 15.4527 22.922 15.4293 22.9187L2.85858 21.1229C2.36593 21.0525 2 20.6306 2 20.1329V3.86751C2 3.36986 2.36593 2.94794 2.85858 2.87756ZM17 3V5H20V7H17V9H20V11H17V13H20V15H17V17H20V19H17V21H22V3H17ZM10.6043 14.1561L8.27015 11.4589L10.6125 8.8436L8.52834 8.8436L6.8524 10.7412L6.75713 10.7412L5.2759 8.8436L3.15383 8.8436L5.51862 11.4883L3.10098 14.1561L5.23468 14.1561L6.96962 12.1643L7.05068 12.1643L8.60155 14.1561L10.6043 14.1561Z" fill="currentColor"/>
+          </svg>
+          <span>Exportar CSV</span>
+        </button>
+      </div>
+ 
+      <!-- ── Leyenda ── -->
+      <div class="gantt-legend">
+        <span class="legend-item" *ngFor="let fase of fases">
+          <span class="legend-dot" [style.background]="fase.color"></span>
+          {{ fase.nombre }}
+        </span>
+      </div>
+ 
+      <!-- ── Tabla Gantt ── -->
+      <div class="modern-table-container">
+        <div class="table-responsive">
+          <table class="modern-table gantt-table">
+            <thead>
+              <tr>
+                <th style="width:80px"># Req.</th>
+                <th>Departamento</th>
+                <th>Solicitante</th>
+                <th style="min-width:260px">Distribución de fases</th>
+                <th class="text-center" style="width:90px">Total</th>
+                <th class="text-center" style="width:100px">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let req of listadoFiltrado"
+                class="gantt-row"
+                [ngClass]="rowClass(totalHoras(req))">
+ 
+                <td><span class="req-id">#{{ req.ID_Documento }}</span></td>
+ 
+                <td><span class="depto-name">{{ req.Proceso ?? req.Departamento }}</span></td>
+ 
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar">{{ getInitials(req.Solicitante) }}</div>
+                    <span class="user-name">{{ req.Solicitante || 'Sin Nombre' }}</span>
+                  </div>
+                </td>
+ 
+                <!-- Barra Gantt -->
+                <td class="gantt-bar-cell">
+                  <div class="gantt-bar-row" [title]="tooltipGantt(req)">
+                    <div class="gantt-seg"
+                      *ngFor="let fase of fases"
+                      [style.width.%]="porcentajeSeg(req, fase.campo)"
+                      [style.background]="fase.color"
+                      [title]="fase.nombre + ': ' + horasFase(req, fase.campo) + ' h'">
+                    </div>
+                  </div>
+                  <div class="gantt-bar-labels">
+                    <ng-container *ngFor="let fase of fases">
+                      <span
+                        *ngIf="horasFase(req, fase.campo) > 0"
+                        class="bar-label"
+                        [style.color]="fase.color">
+                        {{ horasFase(req, fase.campo) }}h
+                      </span>
+                    </ng-container>
+                  </div>
+                </td>
+ 
+                <td class="text-center">
+                  <span class="total-horas">{{ totalHoras(req) }} h</span>
+                </td>
+ 
+                <td class="text-center">
+                  <span class="estado-badge" [ngClass]="badgeClass(totalHoras(req))">
+                    {{ badgeTexto(totalHoras(req)) }}
+                  </span>
+                </td>
+ 
+              </tr>
+ 
+              <tr *ngIf="listadoFiltrado.length === 0">
+                <td colspan="6" class="empty-state">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                  <p>No hay solicitudes para el filtro seleccionado.</p>
+                </td>
+              </tr>
+ 
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+    </ng-container>
+  </div>
+</div>

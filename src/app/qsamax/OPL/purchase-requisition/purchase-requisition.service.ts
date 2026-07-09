@@ -14,11 +14,12 @@ export class PurchaseRequisitionService {
   /**
    * Obtiene la bandeja de tareas según los parámetros enviados desde el componente.
    */
-  getBandejaTareas(tipoVista: string, emailUsuario: string, usuarioParam: string): Observable<requestHeader[]> {
+  getBandejaTareas(tipoVista: string, emailUsuario: string, usuarioParam: string ,isHistorial: boolean ): Observable<requestHeader[]> {
     // 1. Asignamos los parámetros que vienen de la pantalla/componente
     let params = new HttpParams()
       .set('tipoVista', tipoVista)
-      .set('emailUsuario', emailUsuario);
+      .set('emailUsuario', emailUsuario)
+      .set('historial', isHistorial ? 'true' : 'false' );;
 
     // 2. Usamos el environment en lugar de localhost y pasamos los params
     return this.http.get<requestHeader[]>(`${environment.apiUrlqsa}/bandeja`, { params });
@@ -39,4 +40,10 @@ export class PurchaseRequisitionService {
 
     return this.http.patch<any>(`${environment.apiUrlqsa}/cambiar-estado`, null, { params });
   }
+
+
+  obtenerTiemposEficiencia(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrlqsa}/tiempos`);
+  }
+  
 }

@@ -28,11 +28,14 @@
         </div>
         <ul class="header-right-side d-flex align-items-center mt-0 mb-0 pl-0 list-unstyled">
             <li>
+                <!--
+                
                 <button mat-icon-button [matMenuTriggerFor]="languageMenu" class="language-menu-btn">
                     <i class="material-symbols-outlined">
                         translate
                     </i>
-                </button>
+                </button>-->
+                    <!--
                 <mat-menu class="language-menu-dropdown" #languageMenu="matMenu" xPosition="before">
                     <div
                         [class.dark-menu]="themeService.isDark() || themeService.isHeaderDark()"
@@ -72,6 +75,7 @@
                         </ul>
                     </div>
                 </mat-menu>
+                -->
             </li>
             <li>
                 <button
@@ -84,6 +88,7 @@
                     </i>
                 </button>
             </li>
+            <!--
             <li>
                 <a routerLink="/calendar" mat-icon-button class="calendar-menu-btn p-0">
                     <i class="material-symbols-outlined">
@@ -91,6 +96,8 @@
                     </i>
                 </a>
             </li>
+            -->
+            <!--
             <li>
                 <button mat-icon-button [matMenuTriggerFor]="messagesMenu" class="messages-menu-btn p-0">
                     <i class="material-symbols-outlined">
@@ -154,7 +161,8 @@
                     </div>
                 </mat-menu>
             </li>
-            <li>
+             -->
+            <!--             <li>
                 <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" class="notifications-menu-btn p-0">
                     <i class="material-symbols-outlined">
                         notifications
@@ -230,17 +238,23 @@
                     </div>
                 </mat-menu>
             </li>
+            -->
+
+
+
             <li>
                 <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-menu-btn">
                     <img src="images/admin.png" alt="profile-image">
                     <span class="status d-inline-block rounded-circle position-absolute"></span>
                 </button>
-                <mat-menu class="profile-menu-dropdown" #profileMenu="matMenu" xPosition="before">
+
+                                <mat-menu class="profile-menu-dropdown" #profileMenu="matMenu" xPosition="before">
                     <div
                         [class.dark-menu]="themeService.isDark() || themeService.isHeaderDark()"
                     >
                         <div class="menu-header d-flex align-items-center">
                             <img src="images/admin.png" alt="profile-image">
+                               <!-- 
                             <div class="title">
                                 <a routerLink="/my-profile" class="d-inline-block fw-medium">
                                     Mateo Luca
@@ -249,8 +263,11 @@
                                     Admin
                                 </span>
                             </div>
+                            -->
                         </div>
-                        <ul class="menu-body pl-0 mb-0 mt-0 list-unstyled">
+
+                        <!-- 
+                                                <ul class="menu-body pl-0 mb-0 mt-0 list-unstyled">
                             <li class="position-relative transition fw-medium">
                                 <i class="material-symbols-outlined">
                                     person
@@ -280,8 +297,13 @@
                                 <a routerLink="/authentication/logout" class="link-btn d-block position-absolute"></a>
                             </li>
                         </ul>
+-->
+
                     </div>
                 </mat-menu>
+                
+
+
             </li>
         </ul>
     </div>

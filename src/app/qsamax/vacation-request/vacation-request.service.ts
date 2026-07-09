@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { AccruedVacationRecord } from './models/accrued-vacation';
 
 @Injectable({ providedIn: 'root' })
 export class VacationRequestService {
@@ -70,6 +71,13 @@ getApprovedReportByRange(start: string, end: string): Observable<any[]> {
 
   return this.http.get<any[]>(url, { params });
 }
+
+
+getAccruedVacation(date: string): Observable<AccruedVacationRecord[]> {
+    // Esto generará la ruta: /vacation-requests/accruedvacation/2026-06-29
+    const url = `${this.baseUrl}/accruedvacation/${date}`;
+    return this.http.get<AccruedVacationRecord[]>(url);
+  }
 
   
 }

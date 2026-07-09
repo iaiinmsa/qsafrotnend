@@ -142,9 +142,28 @@
                          <li class="sidemenu-item">
                             <a routerLink="/OPL/SolicitudDePedido" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link" *ngIf="hasRole('Solipedidoshow')">
                                 <i class="material-symbols-outlined">request_quote</i> <!-- Icono de solicitud -->
-                                Solicitud de pedido
+                                Solicitud de suministros
                             </a> 
                         </li>
+
+                          <li class="sidemenu-item">
+                                <a routerLink="/OPL/DashboardTiempos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('Solipedidoshow')"> 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    dashboard
+                                </i>
+                                     Dashboard Tiempos
+                                </a>
+                            </li>
+                             <li class="sidemenu-item">
+                                <a routerLink="/OPL/DashboardGantt" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                                *ngIf="hasRole('Solipedidoshow')"> 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    dashboard
+                                </i>
+                                     Dashboard Gantt
+                                </a>
+                            </li>
 
                              <li class="sidemenu-item">
                                 <a routerLink="/OPERACIONES/externalhistoryitem" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
@@ -155,8 +174,7 @@
                                      Historial Articulos bodega externa
                                 </a>
                             </li>
-
-                            
+                           
                         
                         </ul>
                     </mat-expansion-panel>
@@ -273,6 +291,17 @@
                                    Carnets
                                 </a>
                             </li>
+
+
+                               <li class="sidemenu-item">
+                                <a routerLink="/gth/accruedvacation" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link"
+                               > 
+                                <i class="material-symbols-outlined"> <!-- Ícono agregado -->
+                                    request_quote
+                                </i>
+                                    pasivo de vacaciones
+                                </a>
+                                </li>
 
                         </ul>
                     </mat-expansion-panel>

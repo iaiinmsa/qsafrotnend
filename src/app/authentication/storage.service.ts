@@ -152,6 +152,15 @@ export class StorageService {
     return this.getItem('email');
   }
 
+
+    setName(name: string): void {
+    this.setItem('name', name);
+  }
+
+    getName(): string | null {
+    return this.getItem('name');
+  }
+
   /**
    * Limpia los datos de sesión relevantes del usuario.
    */
@@ -159,6 +168,7 @@ export class StorageService {
     this.removeItem('currentUserEmail');
     this.removeItem('userRoles');
      this.removeItem('departmentName');
+     this.removeItem('name');
     this.removeItem('departmentId'); // Si también quieres limpiar esto al cerrar sesión
     // Añade aquí otras claves que deban limpiarse al cerrar sesión
   }
